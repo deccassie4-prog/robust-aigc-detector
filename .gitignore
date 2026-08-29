@@ -1,10 +1,11 @@
 # Python
-__pycanche__/
+__pycache__/
 *.py[cod]
-*.Pyo
+*.pyo
 
-# Visual environments
+# Virtual environments
 .venv/
+venv/
 env/
 
 # Datasets
@@ -28,12 +29,13 @@ outputs/
 runs/
 logs/
 
-#Environment / secrets
+# Environment / secrets
 .env
+.env.*
 
-#Jupyter
+# Jupyter
 .ipynb_checkpoints/
- 
-#OS files
-.DS_Stores
+
+# OS files
+.DS_Store
 Thumbs.db

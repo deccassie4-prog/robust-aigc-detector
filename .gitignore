@@ -1,0 +1,39 @@
+# Python
+__pycanche__/
+*.py[cod]
+*.Pyo
+
+# Visual environments
+.venv/
+env/
+
+# Datasets
+data/
+datasets/
+
+# Image files
+*.jpg
+*.jpeg
+*.png
+*.webp
+
+# Model weights
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+
+# Experiment outputs
+outputs/
+runs/
+logs/
+
+#Environment / secrets
+.env
+
+#Jupyter
+.ipynb_checkpoints/
+ 
+#OS files
+.DS_Stores
+Thumbs.db

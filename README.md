@@ -130,6 +130,21 @@ The main development dependencies are:
 The repository is maintained using Git and GitHub. Final project components are integrated into the repository before submission. The project also preserves the upstream MIT license and includes appropriate attribution to the MIRROR project.
 
 
+## Repository Structure
+
+```text
+robust-aigc-detector/
+├── analysis/       # Error analysis, visualisations, and reports
+├── assets/         # Images and demo-related assets
+├── configs/        # Configuration files
+├── evaluation/     # Robustness evaluation scripts and results
+├── scripts/        # Executable scripts and data-processing utilities
+├── src/            # Core project source code
+├── .gitignore      # Files excluded from version control
+├── CONTRIBUTING.md # Git and collaboration guidelines
+├── LICENSE         # MIT License
+├── README.md       # Project documentation
+└── requirements.txt # Python dependencies
 ### Repository & Project Management
 
 - Repository structure and collaboration workflow were established using Git and GitHub.

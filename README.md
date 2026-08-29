@@ -135,3 +135,16 @@ The repository is maintained using Git and GitHub. Final project components are 
 - Repository structure and collaboration workflow were established using Git and GitHub.
 - Project documentation and README maintenance were coordinated throughout development.
 - Final project components, evaluation results, error analysis, and demo materials were integrated into the repository.
+## Acknowledgements
+
+This project builds upon the MIRROR (Manifold Ideal Reference ReconstructOR) project for generalizable AI-generated image detection.
+
+Upstream repository:
+https://github.com/handsome-rich/MIRROR
+
+Paper:
+Ruiqi Liu et al., "MIRROR: Manifold Ideal Reference ReconstructOR for Generalizable AI-Generated Image Detection", arXiv:2602.02222, 2026.
+
+Our work focuses on evaluating and improving the robustness of AI-generated image detection under realistic image transformations, including compression, blur, resizing, noise, color adjustment, and cropping.
+
+The MIRROR codebase and pretrained models are used as an upstream component of our prototype. Please refer to the upstream repository for its original implementation and licensing information.

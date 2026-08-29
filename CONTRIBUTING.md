@@ -175,3 +175,6 @@ The final repository should integrate:
 - Devpost documentation and demo materials from Member E.
 
 The upstream MIRROR project license and attribution should be preserved in the repository.
+## Maintainer
+
+Repository integration is managed by BitDance.

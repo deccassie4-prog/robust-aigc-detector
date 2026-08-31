@@ -1,0 +1,154 @@
+{
+ "_comment": "GUI parameter registry (plugin-style): add/remove parameters by editing this file only; predict_gui.py generates the form from it dynamically (restart the GUI to apply). widget options: dir|file|savefile|choice|int|bool|bool_path. 'values' holds the user's last choices (written back on window close); delete 'values' to restore factory defaults. Weight defaults are repo-relative paths under data/weights/ (predict.py resolves them against the repo root) - after downloading the three weights there, they work as-is.",
+ "params": [
+  {
+   "flag": "--data_dir",
+   "label": "Image dirs",
+   "widget": "dir",
+   "default": "",
+   "help": "recursively collects all images (png/jpg/jpeg/bmp/webp); folder names are not used as labels"
+  },
+  {
+   "flag": "--crop_mode",
+   "label": "Crop mode",
+   "widget": "choice",
+   "default": "center",
+   "choices": [
+    "center",
+    "five",
+    "grid3x3",
+    "grid4x4",
+    "grid5x5",
+    "multiscale",
+    "single336"
+   ],
+   "help": "center=1 center crop; five=4 corners + center; gridNxN=N^2 crops covering the whole image (4x4=16, 5x5=25; slower per image but denser sampling); multiscale=center at 0.5/1/2x; single336=control group"
+  },
+  {
+   "flag": "--aggregate",
+   "label": "Aggregation",
+   "widget": "choice",
+   "default": "mean",
+   "choices": [
+    "mean",
+    "median",
+    "topk",
+    "max"
+   ],
+   "help": "mean/topk are recommended; max raises false positives on real images (baseline only)"
+  },
+  {
+   "flag": "--batch_size",
+   "label": "Batch size (crops/batch)",
+   "widget": "int",
+   "default": 32,
+   "min": 8,
+   "max": 96,
+   "help": "crops per forward batch; VRAM ~ 0.13GB x crops + 3.4GB weights (+~3GB CUDA context/workspace in Task-Manager accounting)"
+  },
+  {
+   "flag": "--no_resize",
+   "label": "No resize (keep high-freq)",
+   "widget": "bool",
+   "default": false,
+   "help": "skip the short-side>512 -> 512 resize. Caution: high false-positive rate on high-res real images (measured FPR 0.4+)"
+  },
+  {
+   "flag": "--topk_k",
+   "label": "topk k",
+   "widget": "int",
+   "default": 0,
+   "min": 0,
+   "max": 25,
+   "help": "0 = one third of this image's crop count; only used when aggregate=topk"
+  },
+  {
+   "flag": "--use_amp",
+   "label": "fp16 mixed precision",
+   "widget": "bool",
+   "default": true,
+   "help": "fp16 mixed precision, noticeably faster (overflow bug fixed), recommended"
+  },
+  {
+   "flag": "--limit",
+   "label": "First N images only",
+   "widget": "int",
+   "default": 0,
+   "min": 0,
+   "max": 100000,
+   "help": "0 = all; for debugging"
+  },
+  {
+   "flag": "--dump_scores",
+   "label": "Export per-crop scores CSV",
+   "widget": "bool_path",
+   "default": false,
+   "sub_default": "results_gui/per_crop.csv",
+   "help": "for error analysis: the individual score of every crop of every image"
+  },
+  {
+   "flag": "--json_format",
+   "label": "JSON format",
+   "widget": "choice",
+   "default": "detailed",
+   "choices": [
+    "detailed",
+    "competition"
+   ],
+   "help": "detailed=meta header + is_fake boolean per image (daily/experiment use); competition=one {image_path,pred} item per image (competition deliverable format, top-level list)"
+  },
+  {
+   "flag": "--output_json",
+   "label": "Output JSON",
+   "widget": "savefile",
+   "default": "",
+   "help": "empty = auto-named by timestamp under results_gui/, avoiding overwrites"
+  }
+ ],
+ "advanced": [
+  {
+   "flag": "--model_path",
+   "label": "Detector weights",
+   "widget": "file",
+   "default": "data/weights/checkpoint-h-cur.pth",
+   "help": ""
+  },
+  {
+   "flag": "--memory_path",
+   "label": "Memory bank weights",
+   "widget": "file",
+   "default": "data/weights/mirror_phase1.pth",
+   "help": ""
+  },
+  {
+   "flag": "--backbone_path",
+   "label": "DINOv3 backbone dir",
+   "widget": "dir",
+   "default": "data/weights/dinov3-huge",
+   "help": ""
+  },
+  {
+   "flag": "--device",
+   "label": "Device",
+   "widget": "choice",
+   "default": "cuda",
+   "choices": [
+    "cuda",
+    "cpu"
+   ],
+   "help": "cpu is extremely slow, only when no GPU is available"
+  },
+  {
+   "flag": "--num_workers",
+   "label": "DataLoader processes",
+   "widget": "int",
+   "default": 0,
+   "min": 0,
+   "max": 8,
+   "help": "keep 0: preprocessing is ~3ms/image, workers only add memory"
+  }
+ ],
+ "values": {},
+ "ui": {},
+ "tabs": []
+}

@@ -1,41 +1,57 @@
-# Python
+# ===== Python =====
 __pycache__/
 *.py[cod]
 *.pyo
+.pytest_cache/
 
-# Virtual environments
+# ===== 虚拟环境 =====
 .venv/
 venv/
 env/
 
-# Datasets
+# ===== 数据集与本地权重（一律不入库；下载与放置方式见 README）=====
 data/
 datasets/
 
-# Image files
-*.jpg
-*.jpeg
-*.png
-*.webp
-
-# Model weights
+# ===== 模型权重 =====
 *.pth
 *.pt
 *.ckpt
 *.safetensors
 
-# Experiment outputs
+# ===== 图片（默认不入库；assets/ 的图表除外）=====
+*.jpg
+*.jpeg
+*.png
+*.webp
+!assets/**/*.png
+!assets/**/*.jpg
+!assets/**/*.jpeg
+
+# ===== 实验与运行期输出 =====
+/results/
+results_gui/
 outputs/
 runs/
 logs/
+_smoke_*.png
 
-# Environment / secrets
+# ===== GUI 运行期状态（scripts/gui_config.json 本体必须跟踪，只忽略其备份/临时文件）=====
+gui_config.json.bak
+gui_config.json.tmp
+pred_filter_config.json
+pred_filter_config.json.bak
+pred_filter_config.json.tmp
+param_viewer_config.json*
+
+# ===== 环境与密钥 =====
 .env
 .env.*
 
-# Jupyter
+# ===== Jupyter =====
 .ipynb_checkpoints/
 
-# OS files
+# ===== OS / 工具 =====
 .DS_Store
 Thumbs.db
+.zcode/

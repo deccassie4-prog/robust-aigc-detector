@@ -1,0 +1,30 @@
+# MIRROR AIGC detection - Python dependencies (Python 3.10+, dev environment 3.11.6)
+#
+# ** torch / torchvision are NOT installed from this file: install them separately for
+#    your CUDA version (the two must match) **
+#   # RTX 50 series (Blackwell / sm_120) and other recent GPUs - cu128 or newer builds:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+#   # no NVIDIA GPU or CPU-only inference:
+#   pip install torch torchvision
+#
+# Everything else: pip install -r requirements.txt
+
+torch>=2.5
+torchvision>=0.20
+
+# Key constraint: the model-loading key remap depends on the transformers 5.x layer
+# layout (dino.model.layer); 4.x silently drops the LoRA weights, so keep 5.x
+transformers>=5,<6
+peft>=0.20
+
+numpy
+pillow
+tqdm
+scikit-learn
+pandas
+
+# ---- verified combination (2026-08, Windows 11 + RTX 3080 20GB) ----
+# torch==2.5.1+cu121        torchvision==0.20.1+cu121
+# transformers==5.16.1      peft==0.20.0        safetensors==0.8.0
+# numpy==2.4.6              pillow==12.3.0      tqdm==4.70.0
+# scikit-learn==1.9.0       Python==3.11.6

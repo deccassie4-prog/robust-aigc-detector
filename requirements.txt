@@ -1,18 +1,19 @@
-# MIRROR AIGC 检测 —— Python 依赖（Python 3.10+，开发环境 3.11.6）
+# MIRROR AIGC detection - Python dependencies (Python 3.10+, dev environment 3.11.6)
 #
-# ⚠ torch / torchvision 请按本机 CUDA 版本单独安装（两者必须配套，不要只写进本文件）：
-#   # RTX 50 系（Blackwell / sm_120）等较新显卡 —— 需要 cu128 及以上构建：
+# ** torch / torchvision are NOT installed from this file: install them separately for
+#    your CUDA version (the two must match) **
+#   # RTX 50 series (Blackwell / sm_120) and other recent GPUs - cu128 or newer builds:
 #   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
-#   # 无 NVIDIA 显卡或仅 CPU 推理：
+#   # no NVIDIA GPU or CPU-only inference:
 #   pip install torch torchvision
 #
-# 其余依赖：pip install -r requirements.txt
+# Everything else: pip install -r requirements.txt
 
 torch>=2.5
 torchvision>=0.20
 
-# 关键约束：模型加载的 key 重映射依赖 transformers 5.x 的层布局（dino.model.layer），
-# 4.x 会静默丢失 LoRA 权重，必须 5.x
+# Key constraint: the model-loading key remap depends on the transformers 5.x layer
+# layout (dino.model.layer); 4.x silently drops the LoRA weights, so keep 5.x
 transformers>=5,<6
 peft>=0.20
 
@@ -22,7 +23,7 @@ tqdm
 scikit-learn
 pandas
 
-# ---- 已验证组合（2026-08，Windows 11 + RTX 3080 20GB）----
+# ---- verified combination (2026-08, Windows 11 + RTX 3080 20GB) ----
 # torch==2.5.1+cu121        torchvision==0.20.1+cu121
 # transformers==5.16.1      peft==0.20.0        safetensors==0.8.0
 # numpy==2.4.6              pillow==12.3.0      tqdm==4.70.0

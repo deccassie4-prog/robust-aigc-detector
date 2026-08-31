@@ -1,13 +1,15 @@
 """
-evaluate.py — 多基准汇总评测（原 MIRROR 仓库的 inference.py）
+evaluate.py — multi-benchmark evaluation (originally inference.py of the MIRROR repo)
 
-按 0_real/1_fake 目录结构计算 Acc / Bal_Acc / AUC / AP，输出逐 benchmark CSV 到 --output_dir。
-TechjamVal = 比赛验证集（COCO val2017 真图 + DALL·E Advanced 假图，布局为
-base_data_path/techjam_val/0_real|1_fake）。
+Computes Acc / Bal_Acc / AUC / AP over 0_real/1_fake directory layouts and writes a CSV
+per benchmark into --output_dir.
+TechjamVal = competition validation set (COCO val2017 real + DALL-E Advanced fake, laid
+out as base_data_path/techjam_val/0_real|1_fake).
 
-权重默认从 <仓库根>/data/weights/ 读取，数据集默认 <仓库根>/data/datasets/；
-传相对路径时按仓库根解析，与启动时的 CWD 无关。
-注意：本模块 import 时即固定全部随机种子并开启确定性算法（等价性门禁依赖此行为）。
+Weights default to <repo root>/data/weights/, datasets to <repo root>/data/datasets/;
+relative paths are resolved against the repo root, independent of the launching CWD.
+Note: importing this module seeds all RNGs and enables deterministic algorithms
+(the pixel-exact equivalence gate depends on this behavior).
 """
 import argparse
 import os
@@ -27,7 +29,7 @@ from torchvision.transforms import InterpolationMode
 from torchvision.transforms import functional as TF
 from sklearn.metrics import roc_auc_score, average_precision_score
 
-# 仓库根锚定：保证本脚本从任意 CWD 运行时都能导入 src/ 包
+# repo-root anchor: importable from any CWD (src/ package)
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
@@ -271,7 +273,7 @@ def get_args():
     parser.add_argument('--memory_path', default=os.path.join(weight_default, 'mirror_phase1.pth'), type=str)
     parser.add_argument('--backbone_path', default=os.path.join(weight_default, 'dinov3-huge'), type=str)
     parser.add_argument('--base_data_path', default=data_default, type=str,
-                        help='数据集根目录（相对路径按仓库根解析）')
+                        help='dataset root directory (relative paths resolve against repo root)')
     parser.add_argument('--benchmarks', nargs='+', default=['Chameleon'], help='List of benchmarks')
     parser.add_argument('--output_dir', default='./results', type=str)
     parser.add_argument('--batch_size', default=128, type=int)
@@ -282,7 +284,7 @@ def get_args():
     # Placeholder for arg used in TestDataset
     parser.add_argument('--eval_data_path', default=None, type=str, help='Internal use only')
     args = parser.parse_args()
-    # 权重/数据相对路径按仓库根解析（保证任意 CWD 下指向 <仓库>/data/）
+    # resolve relative weight/data paths against repo root (points to <repo>/data/ from any CWD)
     for k in ('model_path', 'memory_path', 'backbone_path', 'base_data_path'):
         if not os.path.isabs(getattr(args, k)):
             setattr(args, k, os.path.join(REPO_ROOT, getattr(args, k)))

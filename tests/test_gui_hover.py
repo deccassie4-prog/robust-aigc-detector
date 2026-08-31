@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-"""悬停闪动回归测试：提示文字变化时，参数表单所有控件坐标必须不变。
+"""Hover-flicker regression tests: when hint text changes, every control in the parameter
+form must keep its exact position.
 
-这是 predict_gui 布局红线（提示标签不得 grid 进参数表格）的回归门禁。
-headless 运行（withdraw 窗口），无 GPU、无子进程。
-可直接 `python tests/test_gui_hover.py` 运行。
+This is the regression gate for the predict_gui layout red line (the hint label must never
+be gridded into the parameter table). Headless (withdrawn window), no GPU, no subprocess.
+Also runs directly: `python tests/test_gui_hover.py`.
 """
 import os
 import sys
@@ -12,7 +13,7 @@ import tkinter as tk
 
 try:
     import pytest
-except ImportError:  # 允许无 pytest 直接运行（走文件尾的 __main__ 入口）
+except ImportError:  # pytest optional: direct-run via the __main__ entry at the bottom
     pytest = types.SimpleNamespace(
         fixture=lambda *a, **k: (lambda f: f),
         skip=lambda msg='': (_ for _ in ()).throw(RuntimeError(msg)),
@@ -24,11 +25,11 @@ from scripts import predict_gui as pg
 
 @pytest.fixture()
 def gui():
-    """一个 withdraw 的 App；无显示环境（Linux CI）时跳过。"""
+    """A withdrawn App; skipped when there is no display (Linux CI)."""
     try:
         root = tk.Tk()
     except tk.TclError:
-        pytest.skip('tkinter 无可用显示环境')
+        pytest.skip('tkinter has no usable display')
     root.withdraw()
     app = pg.App(root)
     root.update()
@@ -47,7 +48,7 @@ def _snapshot(root, app):
 
 
 def test_hover_zero_displacement(gui):
-    """依次显示所有参数提示（含最长的 crop_mode / batch_size 帮助）再清空，控件零位移。"""
+    """Show every parameter hint in turn (including the longest crop_mode / batch_size help), then clear: zero control displacement."""
     root, app = gui
     before = _snapshot(root, app)
     for p in app.all_params:
@@ -58,11 +59,11 @@ def test_hover_zero_displacement(gui):
     after = _snapshot(root, app)
     assert len(before) == len(after)
     moved = [(b[0], b[1:], a[1:]) for b, a in zip(before, after) if b[1:] != a[1:]]
-    assert not moved, f"悬停导致 {len(moved)} 个控件位移（闪动根因未修）：{moved[:3]}"
+    assert not moved, f"hover moved {len(moved)} controls (flicker root cause not fixed): {moved[:3]}"
 
 
 def test_hint_label_not_in_form(gui):
-    """提示标签必须不在参数表格里（不能参与 grid 列宽计算）。"""
+    """The hint label must not live inside the parameter table (it must not participate in grid column-width calculation)."""
     root, app = gui
     hint_owner = app.hint_var
 
@@ -73,29 +74,29 @@ def test_hint_label_not_in_form(gui):
             return False
 
     in_form = any(is_hint_widget(w) for w in app.form.winfo_children())
-    assert not in_form, '提示标签仍 grid 在参数表格内'
+    assert not in_form, 'hint label is still gridded inside the parameter table'
 
 
 def test_hint_label_height_constant(gui):
-    """固定两行高度生效：切换不同长度的提示文字，提示标签自身高度不变。"""
+    """The fixed two-line height holds: switching hint texts of different lengths never changes the hint label height."""
     root, app = gui
     hint_owner = app.hint_var
     hint_lbl = [w for w in root.winfo_children()
                 if w.winfo_class() == 'Label'
                 and str(w.cget('textvariable')) == str(hint_owner)]
-    assert hint_lbl, '未找到提示标签'
-    # 先显示一条提示让标签完成几何布局，再切换到更长的文字比较高度
+    assert hint_lbl, 'hint label not found'
+    # show one hint so the label completes its geometry, then switch to a longer text and compare heights
     app._show_hint(app.all_params[0])
     root.update()
     h1 = hint_lbl[0].winfo_height()
     app._show_hint(app.all_params[1])
     root.update()
     h2 = hint_lbl[0].winfo_height()
-    assert h1 == h2, f'提示标签高度随文字变化: {h1} -> {h2}'
+    assert h1 == h2, f'hint label height changes with text: {h1} -> {h2}'
 
 
 if __name__ == '__main__':
-    # 简易 fixture 手动驱动（不依赖 pytest）
+    # minimal manual fixture driver (pytest not required)
     root = tk.Tk()
     root.withdraw()
     app = pg.App(root)
@@ -103,5 +104,6 @@ if __name__ == '__main__':
     for fn in (test_hover_zero_displacement, test_hint_label_not_in_form,
                test_hint_label_height_constant):
         fn((root, app))
-    print(f'回归通过：提示标签独立于参数表格，高度恒定（{len(app.all_params)} 个参数提示轮询无位移）')
+    print(f'Passed: hint label independent of the parameter grid, constant height '
+          f'({len(app.all_params)} parameter hints polled with zero displacement)')
     root.destroy()

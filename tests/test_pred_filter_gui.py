@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-"""pred_filter_gui 的 headless 回归测试：无 GPU、可重复跑（幂等）。
+"""Headless regression tests for pred_filter_gui: no GPU, idempotent (repeatable).
 
-覆盖：双格式加载与无效条目 / 闭区间与 -1 排除 / pred 文件名格式化 /
-撞名序号（含大小写）/ 文件名索引解析（唯一、多处、未命中）/ 输出文件夹
-同名前缀 / 选项卡标题去重 / 真实小文件复制端到端（内联 worker + start_run 全流程）/ 配置持久化。
+Coverage: dual-format loading with invalid entries / closed interval and -1 exclusion /
+pred file-name formatting / collision suffixes (case-insensitive) / name index resolution
+(unique, multiple, miss) / output folder name prefixes / tab title dedup / real small-file
+copy end-to-end (inline worker + start_run full flow) / config persistence.
 
-JSON 里记录的失效路径一律用正斜杠伪造（G:/stale/...），使 basename 解析断言在
-Windows 与 POSIX 下语义一致。可直接 `python tests/test_pred_filter_gui.py` 运行。
+Stale paths in the JSONs are faked with forward slashes (G:/stale/...) so basename
+resolution assertions behave identically on Windows and POSIX.
+Also runs directly: `python tests/test_pred_filter_gui.py`.
 """
 import csv
 import json
@@ -20,7 +22,7 @@ import tkinter as tk
 
 try:
     import pytest
-except ImportError:  # 允许无 pytest 直接运行（走文件尾的 __main__ 入口）
+except ImportError:  # pytest optional: direct-run via the __main__ entry at the bottom
     pytest = types.SimpleNamespace(
         fixture=lambda *a, **k: (lambda f: f),
         skip=lambda msg='': (_ for _ in ()).throw(RuntimeError(msg)),
@@ -41,7 +43,7 @@ def workdir():
 
 @pytest.fixture(scope='module')
 def config_guard():
-    """备份/恢复 pred_filter_config.json，保证幂等且不污染真实配置。"""
+    """Back up / restore pred_filter_config.json so the test is idempotent and never pollutes the real config."""
     bak = open(pf.CONFIG_PATH, 'rb').read() if os.path.exists(pf.CONFIG_PATH) else None
     yield
     for extra in (pf.CONFIG_PATH + '.bak', pf.CONFIG_PATH + '.tmp'):
@@ -56,7 +58,7 @@ def config_guard():
 
 
 def _build_env(tmp):
-    """两个 predict 输出 JSON + 一个递归小数据集。"""
+    """Two predict output JSONs + a small recursive dataset."""
     comp = [{'image_path': f'X:/a/{i}.png', 'pred': v}
             for i, v in enumerate([0.9, 0.5, -1.0, 0.951053, 0.951053])]
     det = {'meta': {'x': 1}, 'images': [
@@ -88,11 +90,11 @@ def env(workdir):
 
 @pytest.fixture(scope='module')
 def gui_app(config_guard):
-    """一个 withdraw 的 pred_filter App，组 7-10 共享（保持与原回归一致的状态顺序）。"""
+    """A withdrawn pred_filter App shared by groups 7-10 (same state order as the original regression)."""
     try:
         root = tk.Tk()
     except tk.TclError:
-        pytest.skip('tkinter 无可用显示环境')
+        pytest.skip('tkinter has no usable display')
     root.withdraw()
     app = pf.App(root)
     root.update()
@@ -107,7 +109,7 @@ def _pump(root, secs=0.5):
         time.sleep(0.02)
 
 
-# ---------- 1-6：纯函数 ----------
+# ---------- groups 1-6: pure functions ----------
 
 def test_load_entries_both_formats(env):
     e1, f1, b1 = pf.load_entries(env['p1'])
@@ -120,14 +122,14 @@ def test_in_range_closed_interval():
     assert pf.in_range(0.5, 0, 1) and pf.in_range(0, 0, 1) and pf.in_range(1, 0, 1)
     assert not pf.in_range(-1.0, 0, 1) and not pf.in_range(1.1, 0, 1)
     assert pf.in_range(0.5, None, 0.6) and pf.in_range(0.7, 0.6, None)
-    assert pf.in_range(-1.0, -1, 1)  # 显式放宽下界时允许失败项
+    assert pf.in_range(-1.0, -1, 1)  # explicitly relaxing the lower bound admits failed items
 
 
 def test_pred_label_formatting():
     assert pf.pred_label(0.951053) == '0.951053'
     assert pf.pred_label(0.5) == '0.5'
     assert pf.pred_label(1.0) == '1' and pf.pred_label(0.0) == '0'
-    assert pf.pred_label(0.000051) == '0.000051'  # 不允许科学计数法
+    assert pf.pred_label(0.000051) == '0.000051'  # no scientific notation
 
 
 def test_unique_name_collision_suffix():
@@ -142,7 +144,7 @@ def test_build_index_and_resolve(env):
     idx = pf.build_index(src)
     r, n = pf.resolve_by_name('G:/stale/beach/x1.png', idx)
     assert n == 1 and r.endswith('x1.png'), (r, n)
-    r, n = pf.resolve_by_name('X:/any/same.png', idx)  # 多处命中 → 排序第一个
+    r, n = pf.resolve_by_name('X:/any/same.png', idx)  # multiple hits -> first in sort order
     assert n == 2 and 'dup1' in r, (r, n)
     r, n = pf.resolve_by_name('X:/any/nope.png', idx)
     assert r is None and n == 0
@@ -156,14 +158,14 @@ def test_dedup_folder_names():
     assert names[pc] == 'REAL', names
 
 
-# ---------- 7-10：GUI 全流程（依赖 test 顺序产生的共享状态） ----------
+# ---------- groups 7-10: GUI full flow (shared state built by the ordered tests above) ----------
 
 def test_inline_copy_end_to_end(env, gui_app):
     root, app = gui_app
     app.gmin_var.set('0.4')
     app.gmax_var.set('1.0')
 
-    # JSON 记录的是失效路径（G:/stale/...），basename 与 env 数据集一致 → 应全找到
+    # the JSON records stale paths (G:/stale/...); basenames match the env dataset -> all must be found
     pick = [{'image_path': f'G:/stale/beach/{n}', 'pred': v}
             for n, v in [('x1.png', 0.9), ('x2.png', 0.5), ('x0.png', -1.0),
                          ('x3.jpg', 0.951053), ('x4.jpg', 0.951053)]]
@@ -176,11 +178,11 @@ def test_inline_copy_end_to_end(env, gui_app):
     assert app.notebook.tab(tab.frame, 'text') == 'beach'
     tab.dir_var.set(env['src'])
     tab.build_index_now()
-    _pump(root, 0.4)  # 触发去抖统计
+    _pump(root, 0.4)  # trigger the debounced stats
     lo, hi, err = tab.effective_range()
     assert err is None, err
-    assert len(tab._matched) == 4, len(tab._matched)   # -1 被排除
-    assert tab.stat_var.get().startswith('匹配 4 条 · 找到 4 张'), tab.stat_var.get()
+    assert len(tab._matched) == 4, len(tab._matched)   # -1 excluded
+    assert tab.stat_var.get().startswith('4 matched · found 4 files'), tab.stat_var.get()
 
     out1 = os.path.join(env['tmp'], 'out1')
     app.out_var.set(out1)
@@ -195,9 +197,9 @@ def test_inline_copy_end_to_end(env, gui_app):
     with open(os.path.join(folder, 'manifest.csv'), encoding='utf-8-sig',
               newline='') as f:
         mrows = list(csv.reader(f))
-    assert mrows[0] == ['新文件名', 'pred', 'JSON记录路径', '实际复制路径']
+    assert mrows[0] == ['new_name', 'pred', 'json_path', 'copied_path']
     assert len(mrows) == 5 and mrows[4][0] == '0.951053_2.jpg'
-    assert mrows[4][3].endswith('x4.jpg'), mrows[4]    # 序号图对回正确原图
+    assert mrows[4][3].endswith('x4.jpg'), mrows[4]    # the renamed copy maps back to the right source image
 
 
 def test_start_run_full_flow(env, gui_app):
@@ -207,7 +209,7 @@ def test_start_run_full_flow(env, gui_app):
     for nm in ('x6.png', 'x7.png'):
         with open(os.path.join(src2, 'beach2', nm), 'wb') as f:
             f.write(b'img-' + nm.encode())
-    # 重写 det.json：basename 与 dataset2 一致（含 2 条无效条目）
+    # rewrite det.json: basenames match dataset2 (including 2 invalid entries)
     det = {'meta': {'x': 1}, 'images': [
         {'image_path': 'G:/moved/beach2/x6.png', 'pred': 0.75},
         {'image_path': 'G:/moved/beach2/x7.png', 'pred': 0.1},
@@ -215,21 +217,21 @@ def test_start_run_full_flow(env, gui_app):
         {'image_path': 'X:/b/bad2.jpg', 'pred': 'oops'}]}
     with open(env['p2'], 'w') as f:
         json.dump(det, f)
-    app.add_json_tabs([env['p2']])              # detailed 格式
+    app.add_json_tabs([env['p2']])              # detailed format
     tab2 = app._tabs[1]
     assert app.notebook.tab(tab2.frame, 'text') == 'det'
     tab2.dir_var.set(src2)
     tab2.build_index_now()
     out2 = os.path.join(env['tmp'], 'out2')
     app.out_var.set(out2)
-    app.start_run()                             # 预检应直接通过，无弹窗
+    app.start_run()                             # preflight should pass directly, no dialogs
     end = time.time() + 8
     while app.running and time.time() < end:
         root.update()
         time.sleep(0.02)
-    assert not app.running, 'start_run 未在超时内结束'
+    assert not app.running, 'start_run did not finish within the timeout'
     assert os.path.exists(os.path.join(out2, 'det', '0.75.png'))
-    assert not os.path.exists(os.path.join(out2, 'det', '0.1.png'))  # 低于全局下界
+    assert not os.path.exists(os.path.join(out2, 'det', '0.1.png'))  # below the global lower bound
     assert os.path.exists(os.path.join(out2, 'det', 'manifest.csv'))
 
 
@@ -238,13 +240,13 @@ def test_tab_title_dedup_and_reimport(env, gui_app):
     p3 = os.path.join(env['tmp'], 'sub')
     os.makedirs(p3, exist_ok=True)
     p3 = os.path.join(p3, 'det.json')
-    shutil.copyfile(env['p2'], p3)              # 与 p2 同内容、不同目录
-    app.add_json_tabs([env['p2']])              # 重复导入 → 跳过
+    shutil.copyfile(env['p2'], p3)              # same content as p2, different directory
+    app.add_json_tabs([env['p2']])              # duplicate import -> skipped
     assert len(app._tabs) == 2
-    app.add_json_tabs([p3])                     # 同名不同目录 → 标题 (2)
+    app.add_json_tabs([p3])                     # same name, different dir -> title (2)
     assert app.notebook.tab(app._tabs[2].frame, 'text') == 'det (2)'
     names3 = pf.dedup_folder_names([env['p2'], p3])
-    # 冲突组双方都加父目录前缀：p2 的父目录是动态临时目录名，p3 的父目录是 sub
+    # both sides of a conflict group get the parent-dir prefix: p2's parent is the dynamic temp dir name, p3's is sub
     assert names3[p3] == 'sub__det', names3
     assert names3[env['p2']].endswith('__det') and names3[env['p2']] != names3[p3], names3
 
@@ -260,7 +262,7 @@ def test_config_persistence(env, gui_app):
 
 
 if __name__ == '__main__':
-    # 不依赖 pytest 的直接运行入口：按序执行全部 10 组检查
+    # pytest-free direct-run entry: execute all 10 groups in order
     tmp = tempfile.mkdtemp(prefix='_pf_test_')
     bak = open(pf.CONFIG_PATH, 'rb').read() if os.path.exists(pf.CONFIG_PATH) else None
     root = None
@@ -272,27 +274,27 @@ if __name__ == '__main__':
         root.update()
         g = (root, app)
         test_load_entries_both_formats(env_d)
-        print('1 双格式加载 + 无效条目 OK')
+        print('1 dual-format loading + invalid entries OK')
         test_in_range_closed_interval()
-        print('2 闭区间边界 OK')
+        print('2 closed-interval boundaries OK')
         test_pred_label_formatting()
-        print('3 pred 文件名格式化 OK')
+        print('3 pred file-name formatting OK')
         test_unique_name_collision_suffix()
-        print('4 撞名加序号 OK')
+        print('4 collision suffixes OK')
         test_build_index_and_resolve(env_d)
-        print('5 索引解析（唯一/多处/未命中）OK')
+        print('5 index resolution (unique/multiple/miss) OK')
         test_dedup_folder_names()
-        print('6 同名文件夹前缀 OK')
+        print('6 duplicate folder-name prefixes OK')
         test_inline_copy_end_to_end(env_d, g)
-        print('7 内联复制端到端（重命名+序号+manifest）OK')
+        print('7 inline copy end-to-end (rename + suffixes + manifest) OK')
         test_start_run_full_flow(env_d, g)
-        print('8 start_run 全流程（detailed 格式 + 全局区间）OK')
+        print('8 start_run full flow (detailed format + global range) OK')
         test_tab_title_dedup_and_reimport(env_d, g)
-        print('9 标题去重 + 重复导入跳过 OK')
+        print('9 title dedup + duplicate-import skip OK')
         test_config_persistence(env_d, g)
-        print('10 配置持久化 OK')
+        print('10 config persistence OK')
         root.destroy()
-        print('\n全部 10 组检查通过 ✔')
+        print('\nAll 10 check groups passed')
     finally:
         if root is not None:
             try:

@@ -1,18 +1,22 @@
-"""pred_filter_gui.py — 按 pred 区间筛选图片并归档（误差分析取图工具）
+"""pred_filter_gui.py - collect images by pred range into an archive folder
+(error-analysis picker tool)
 
-用途：选多个 predict.py 产出的 JSON（competition / detailed 双格式自动识别），
-每个 JSON 一个选项卡：指定对应图片目录、可覆盖全局的分数区间；实时统计
-"匹配 n 条 · 找到 m 张"。点"开始复制"后，在输出目录下按 JSON 文件名建文件夹，
-把区间内的图片复制进去并重命名为各自的 pred 值（撞名自动加 _2/_3 序号），
-每个文件夹附 manifest.csv（新文件名, pred, JSON记录路径, 实际复制路径）。
+Usage: pick one or more predict.py output JSONs (competition / detailed formats are
+auto-detected); each JSON gets a tab where you set the image directory and an optional
+score-range override; the status line live-updates "N matched - M files found".
+"Start copy" creates a folder per JSON under the output directory, copies the in-range
+images into it renamed to their pred value (duplicate names get _2/_3 suffixes), and
+writes manifest.csv (new name, pred, json path, copied path).
 
-查找语义：只按文件名匹配，不含任何路径——JSON 里的
-image_path 仅取 basename，实际定位全靠所选图片目录的递归索引；数据集搬过家
-（换盘、换机器）也能找到。多处同名命中取排序第一个并提示。
+Lookup semantics: matching is by FILE NAME only, never by path - the image_path in the
+JSON is reduced to its basename and located via a recursive index of the chosen image
+directory, so images are still found after the dataset moved (another disk / machine).
+If a name hits several files, the first in sort order is taken and reported.
 
-零第三方依赖（tkinter/json/threading/queue/csv 均为标准库）。
-复制在子线程执行，界面不卡；停止=当前文件完成后停下，已复制的保留。
-全局设置持久化在 pred_filter_config.json（原子写，留 .bak）。
+Zero third-party dependencies (tkinter/json/threading/queue/csv are stdlib).
+Copying runs in a worker thread; the UI stays responsive. Stop = finish the current
+file, already-copied files are kept.
+Global settings persist in pred_filter_config.json (atomic write, .bak backup).
 """
 import csv
 import json
@@ -28,12 +32,12 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(BASE, 'pred_filter_config.json')
 
 
-# ---------- 纯函数（可脱离 GUI 单测） ----------
+# ---------- pure functions (unit-testable without the GUI) ----------
 
 def load_entries(path):
-    """读 JSON → (entries, fmt, n_bad)。entries=[(image_path, pred), ...]。
-    competition = 顶层列表 [{"image_path","pred"}]；detailed = {"images":[...]}。
-    缺字段 / 非数值 pred 的条目跳过并计数。"""
+    """Read a JSON -> (entries, fmt, n_bad). entries=[(image_path, pred), ...].
+    competition = top-level list [{"image_path","pred"}]; detailed = {"images":[...]}.
+    Entries with missing fields / non-numeric pred are skipped and counted."""
     with open(path, encoding='utf-8') as f:
         data = json.load(f)
     if isinstance(data, dict) and isinstance(data.get('images'), list):
@@ -41,7 +45,7 @@ def load_entries(path):
     elif isinstance(data, list):
         raw, fmt = data, 'competition'
     else:
-        raise ValueError('不是可识别的格式（应为列表或含 images 的字典）')
+        raise ValueError('unrecognized format (expected a list or a dict with an images key)')
     entries, bad = [], 0
     for it in raw:
         try:
@@ -55,7 +59,7 @@ def load_entries(path):
 
 
 def in_range(pred, lo, hi):
-    """闭区间 [lo, hi]；任一侧 None 表示不设限。失败项 pred=-1 在 min>=0 时自然排除。"""
+    """Closed interval [lo, hi]; None on either side = unbounded. Failed items (pred=-1) are naturally excluded when min >= 0."""
     if lo is not None and pred < lo:
         return False
     if hi is not None and pred > hi:
@@ -64,14 +68,14 @@ def in_range(pred, lo, hi):
 
 
 def pred_label(pred):
-    """pred → 文件名主干：固定 6 位小数去尾零（0.951053→'0.951053'、0.5→'0.5'、
-    1.0→'1'），避免 str() 对极小值输出科学计数法（1e-05 不能做文件名主干）。"""
+    """pred -> file-name stem: fixed 6 decimals with trailing zeros stripped (0.951053->'0.951053',
+    0.5->'0.5', 1.0->'1'); avoids str() scientific notation for tiny values ('1e-05' cannot be a file stem)."""
     s = f'{pred:.6f}'.rstrip('0').rstrip('.')
     return s if s not in ('', '-') else '0'
 
 
 def unique_name(stem, ext, taken):
-    """返回不冲突的 文件名。taken=已占用文件名集合（小写），撞名追加 _2/_3…"""
+    """Return a non-conflicting file name. taken = set of used names (lowercase); collisions append _2/_3..."""
     cand = stem + ext
     i = 2
     while cand.lower() in taken:
@@ -82,7 +86,7 @@ def unique_name(stem, ext, taken):
 
 
 def build_index(root):
-    """递归索引图片目录：{文件名小写: [完整路径...]}。"只按文件名匹配"的依据。"""
+    """Index an image directory recursively: {lower-case name: [full paths...]}. Basis of the name-only lookup."""
     idx = {}
     for rd, _, fs in os.walk(root):
         for f in fs:
@@ -91,7 +95,7 @@ def build_index(root):
 
 
 def resolve_by_name(img_path, index):
-    """按文件名解析 → (实际路径 or None, 命中数)。多处命中取排序第一个。"""
+    """Resolve by file name -> (actual path or None, hit count). Multiple hits: first in sort order."""
     hits = index.get(os.path.basename(img_path).lower())
     if not hits:
         return None, 0
@@ -101,7 +105,7 @@ def resolve_by_name(img_path, index):
 
 
 def dedup_folder_names(paths):
-    """JSON 路径 → 输出文件夹名。同名自动加父目录前缀（父目录也同名则继续上溯）。"""
+    """JSON path -> output folder name. Same names get a parent-dir prefix (walks up if parents collide too)."""
     base = {p: os.path.splitext(os.path.basename(p))[0] for p in paths}
     levels = {p: 0 for p in paths}
 
@@ -128,10 +132,10 @@ def dedup_folder_names(paths):
     return names
 
 
-# ---------- 选项卡 ----------
+# ---------- tab ----------
 
 class FilterTab:
-    """一个 JSON 选项卡：图片目录 + 可覆盖的分数区间（每侧留空=用全局）+ 实时统计。"""
+    """One JSON tab: image directory + optional range override (empty side = global) + live stats."""
 
     def __init__(self, app, notebook, json_path, entries, fmt, n_bad):
         self.app = app
@@ -139,17 +143,17 @@ class FilterTab:
         self.entries = entries
         self.fmt = fmt
         self.n_bad = n_bad
-        self.index = None          # {文件名小写: [完整路径...]}
+        self.index = None          # {lower-case name: [full paths...]}
         self._index_dirty = True
         self._idx_after = None
-        self.found_cache = {}      # 文件名 → 命中数（0=未找到），跨区间调整复用
+        self.found_cache = {}      # name -> hit count (0=not found), reused across range tweaks
         self._matched = []
         self.dir_var = tk.StringVar()
         self.min_var = tk.StringVar()
         self.max_var = tk.StringVar()
         self.stat_var = tk.StringVar(value='')
         self.frame = ttk.Frame(notebook)
-        self.widgets = []          # 运行期间统一禁用
+        self.widgets = []          # uniformly disabled while running
         self._build(notebook)
         self.dir_var.trace_add('write', lambda *a: self._on_dir_change())
         self.min_var.trace_add('write', lambda *a: self.app.refresh_all())
@@ -162,30 +166,30 @@ class FilterTab:
     def _build(self, notebook):
         pad = dict(padx=6, pady=4)
         f = self.frame
-        ttk.Label(f, text='图片目录').grid(row=0, column=0, sticky='e', **pad)
+        ttk.Label(f, text='Image dir').grid(row=0, column=0, sticky='e', **pad)
         fr = ttk.Frame(f)
         fr.grid(row=0, column=1, sticky='we', **pad)
         de = ttk.Entry(fr, textvariable=self.dir_var)
         de.pack(side='left', fill='x', expand=True)
-        db = ttk.Button(fr, text='浏览…', command=self.pick_dir)
+        db = ttk.Button(fr, text='Browse...', command=self.pick_dir)
         db.pack(side='left', padx=4)
         self.widgets += [de, db]
-        info = f'{os.path.basename(self.json_path)} · {len(self.entries):,} 条（{self.fmt}）'
+        info = f'{os.path.basename(self.json_path)} - {len(self.entries):,} entries ({self.fmt})'
         if self.n_bad:
-            info += f' · 无效 {self.n_bad} 条已跳过'
+            info += f' - {self.n_bad} invalid skipped'
         ttk.Label(f, text=info, foreground='#666').grid(row=0, column=2, sticky='w', **pad)
 
-        ttk.Label(f, text='区间覆盖').grid(row=1, column=0, sticky='e', **pad)
+        ttk.Label(f, text='Range override').grid(row=1, column=0, sticky='e', **pad)
         rf = ttk.Frame(f)
         rf.grid(row=1, column=1, sticky='w', **pad)
-        ttk.Label(rf, text='最小').pack(side='left')
+        ttk.Label(rf, text='min').pack(side='left')
         me = ttk.Entry(rf, textvariable=self.min_var, width=9)
         me.pack(side='left', padx=(2, 10))
-        ttk.Label(rf, text='最大').pack(side='left')
+        ttk.Label(rf, text='max').pack(side='left')
         xe = ttk.Entry(rf, textvariable=self.max_var, width=9)
         xe.pack(side='left', padx=2)
         self.widgets += [me, xe]
-        ttk.Label(f, text='留空 = 用全局值', foreground='#999').grid(
+        ttk.Label(f, text='empty = use global value', foreground='#999').grid(
             row=1, column=2, sticky='w', **pad)
 
         st = tk.Label(f, textvariable=self.stat_var, fg='#0a6', wraplength=560,
@@ -193,7 +197,7 @@ class FilterTab:
         st.grid(row=2, column=0, columnspan=3, sticky='we', padx=10, pady=(0, 6))
         f.columnconfigure(1, weight=1)
 
-    # -- 目录 --
+    # -- directory --
     def pick_dir(self):
         d = filedialog.askdirectory(
             initialdir=self.app.cfg.get('last_dir') or BASE)
@@ -220,26 +224,26 @@ class FilterTab:
         self.build_index_now()
         self.update_m()
 
-    # -- 区间与统计 --
+    # -- range and stats --
     def effective_range(self):
-        """(lo, hi, err)：每侧留空回退全局；文本非法或 min>max 返回 err。"""
+        """(lo, hi, err): an empty side falls back to the global value; invalid text or min>max returns err."""
         try:
             s = self.min_var.get().strip()
             lo = float(s) if s else None
         except ValueError:
-            return None, None, '覆盖最小值不是数字'
+            return None, None, 'override min is not a number'
         try:
             s = self.max_var.get().strip()
             hi = float(s) if s else None
         except ValueError:
-            return None, None, '覆盖最大值不是数字'
+            return None, None, 'override max is not a number'
         gmin, gmax, gerr = self.app.glob_range()
         if gerr:
             return None, None, gerr
         lo = gmin if lo is None else lo
         hi = gmax if hi is None else hi
         if lo is not None and hi is not None and lo > hi:
-            return None, None, '最小值大于最大值'
+            return None, None, 'min is greater than max'
         return lo, hi, None
 
     def matched(self, lo, hi):
@@ -259,20 +263,20 @@ class FilterTab:
         n = len(self._matched)
         d = self.dir_var.get().strip()
         if not d:
-            self.stat_var.set(f'匹配 {n} 条 · 未选图片目录')
+            self.stat_var.set(f'{n} matched · no image dir selected')
             return
         if not os.path.isdir(d):
-            self.stat_var.set(f'匹配 {n} 条 · 目录不存在')
+            self.stat_var.set(f'{n} matched · directory not found')
             return
         if self._index_dirty:
-            self.stat_var.set(f'匹配 {n} 条 · 正在索引目录…')
+            self.stat_var.set(f'{n} matched · indexing directory...')
             if self._idx_after is None:
                 self._idx_after = self.app.after(250, self._build_and_count)
             return
         m, multi = self._count_found()
-        txt = f'匹配 {n} 条 · 找到 {m} 张'
+        txt = f'{n} matched · found {m} files'
         if multi:
-            txt += f'（{multi} 个文件名多处命中，取第一个）'
+            txt += f' ({multi} names hit multiple files, first taken)'
         self.stat_var.set(txt)
 
     def _count_found(self):
@@ -290,7 +294,7 @@ class FilterTab:
         return m, multi
 
     def resolved(self):
-        """[(JSON记录路径, pred, 实际路径 or None)]，与统计同一套解析。"""
+        """[(json path, pred, actual path or None)]; same resolution as the stats line."""
         out = []
         for p, pred in self._matched:
             src, _ = resolve_by_name(p, self.index)
@@ -302,16 +306,16 @@ class FilterTab:
             w.config(state='disabled' if locked else 'normal')
 
 
-# ---------- 主窗口 ----------
+# ---------- main window ----------
 
 class App:
     def __init__(self, root):
         self.root = root
-        root.title('按 pred 区间收集图片 · pred_filter')
+        root.title('Collect images by pred range - pred_filter')
         root.geometry('900x660')
         self.cfg = self._load_config()
         self._tabs = []
-        self._loaded = set()       # 已加载 JSON（normcase），防重复导入
+        self._loaded = set()       # loaded JSONs (normcase), guards against duplicate imports
         self.q = queue.Queue()
         self.running = False
         self.stop_flag = False
@@ -323,7 +327,7 @@ class App:
         root.protocol('WM_DELETE_WINDOW', self.on_close)
         self.root.after(120, self._poll)
 
-    # ---- 配置 ----
+    # ---- config ----
     @staticmethod
     def _load_config():
         cfg = {'min': '0', 'max': '1', 'out_dir': '', 'last_dir': ''}
@@ -360,39 +364,39 @@ class App:
         self.gmax_var.set(str(self.cfg.get('max', '1')))
         self.out_var.set(str(self.cfg.get('out_dir', '')))
 
-    # ---- 界面 ----
+    # ---- UI ----
     def _build(self):
         pad = dict(padx=6, pady=4)
         top = ttk.Frame(self.root)
         top.pack(fill='x', **pad)
-        self.btn_select = ttk.Button(top, text='选择 JSON…（可多选）',
+        self.btn_select = ttk.Button(top, text='Select JSON... (multi-select)',
                                      command=self.pick_jsons)
         self.btn_select.pack(side='left', padx=4)
-        self.btn_close_tab = ttk.Button(top, text='✕ 关闭当前', command=self.close_tab)
+        self.btn_close_tab = ttk.Button(top, text='x Close current tab', command=self.close_tab)
         self.btn_close_tab.pack(side='left', padx=4)
 
-        tf = ttk.LabelFrame(self.root, text='每个 JSON 一个选项卡（选图片目录、可覆盖分数区间）')
+        tf = ttk.LabelFrame(self.root, text='One tab per JSON (pick the image dir, optional range override)')
         tf.pack(fill='x', **pad)
         self.notebook = ttk.Notebook(tf)
         self.notebook.pack(fill='x', **pad)
 
-        gf = ttk.LabelFrame(self.root, text='全局设置（选项卡留空的项使用这里的值）')
+        gf = ttk.LabelFrame(self.root, text='Global settings (used when a tab leaves a field empty)')
         gf.pack(fill='x', **pad)
         row = ttk.Frame(gf)
         row.pack(fill='x', **pad)
-        ttk.Label(row, text='最小值').pack(side='left')
+        ttk.Label(row, text='min').pack(side='left')
         self.gmin_var = tk.StringVar(value='0')
         ge1 = ttk.Entry(row, textvariable=self.gmin_var, width=9)
         ge1.pack(side='left', padx=(2, 12))
-        ttk.Label(row, text='最大值').pack(side='left')
+        ttk.Label(row, text='max').pack(side='left')
         self.gmax_var = tk.StringVar(value='1')
         ge2 = ttk.Entry(row, textvariable=self.gmax_var, width=9)
         ge2.pack(side='left', padx=(2, 12))
-        ttk.Label(row, text='输出目录').pack(side='left')
+        ttk.Label(row, text='Output dir').pack(side='left')
         self.out_var = tk.StringVar()
         oe = ttk.Entry(row, textvariable=self.out_var)
         oe.pack(side='left', fill='x', expand=True, padx=2)
-        ob = ttk.Button(row, text='浏览…', command=self._pick_out)
+        ob = ttk.Button(row, text='Browse...', command=self._pick_out)
         ob.pack(side='left', padx=4)
         self.lockable = [ge1, ge2, oe, ob]
         self.gmin_var.trace_add('write', lambda *a: self.refresh_all())
@@ -400,22 +404,22 @@ class App:
 
         ctrl = ttk.Frame(self.root)
         ctrl.pack(fill='x', **pad)
-        self.btn_start = ttk.Button(ctrl, text='开始复制', command=self.start_run)
+        self.btn_start = ttk.Button(ctrl, text='Start copy', command=self.start_run)
         self.btn_start.pack(side='left', padx=6)
-        self.btn_stop = ttk.Button(ctrl, text='停止', command=self.stop_run,
+        self.btn_stop = ttk.Button(ctrl, text='Stop', command=self.stop_run,
                                    state='disabled')
         self.btn_stop.pack(side='left', padx=6)
         self.progress = ttk.Progressbar(ctrl, length=260, maximum=1, value=0)
         self.progress.pack(side='left', padx=10)
-        self.btn_open = ttk.Button(ctrl, text='打开输出目录', command=self.open_out,
+        self.btn_open = ttk.Button(ctrl, text='Open output dir', command=self.open_out,
                                    state='disabled')
         self.btn_open.pack(side='right', padx=6)
 
-        self.status_var = tk.StringVar(value='就绪：先选择 JSON 文件')
+        self.status_var = tk.StringVar(value='Ready: select JSON files first')
         ttk.Label(self.root, textvariable=self.status_var, foreground='#036').pack(
             anchor='w', padx=10)
 
-        lf = ttk.LabelFrame(self.root, text='日志')
+        lf = ttk.LabelFrame(self.root, text='Log')
         lf.pack(fill='both', expand=True, **pad)
         self.logbox = tk.Text(lf, height=9, font=('Consolas', 9), state='disabled',
                               wrap='none')
@@ -435,12 +439,12 @@ class App:
         if d and os.path.isdir(d):
             os.startfile(d)
 
-    # ---- 选项卡管理 ----
+    # ---- tab management ----
     def pick_jsons(self):
         ps = filedialog.askopenfilenames(
-            title='选择 predict 输出的 JSON（可多选）',
+            title='Select predict output JSONs (multi-select)',
             initialdir=self.cfg.get('last_dir') or BASE,
-            filetypes=[('JSON', '*.json'), ('所有文件', '*.*')])
+            filetypes=[('JSON', '*.json'), ('All files', '*.*')])
         if not ps:
             return
         self.cfg['last_dir'] = os.path.dirname(ps[0])
@@ -456,10 +460,10 @@ class App:
             try:
                 entries, fmt, bad = load_entries(p)
             except Exception as e:
-                messagebox.showerror('读取失败', f'{p}\n{e}')
+                messagebox.showerror('Read failed', f'{p}\n{e}')
                 continue
             if not entries:
-                messagebox.showwarning('空 JSON', f'{p}\n没有有效条目，跳过。')
+                messagebox.showwarning('Empty JSON', f'{p}\nNo valid entries, skipped.')
                 continue
             self._loaded.add(key)
             tab = FilterTab(self, self.notebook, p, entries, fmt, bad)
@@ -467,8 +471,8 @@ class App:
             self.notebook.add(tab.frame, text=self._title_for(tab))
             self.notebook.select(tab.frame)
             added += 1
-        self.status_var.set(f'已加载 {added} 个 JSON'
-                            + (f'（跳过重复 {skipped}）' if skipped else ''))
+        self.status_var.set(f'{added} JSONs loaded'
+                            + (f' ({skipped} duplicates skipped)' if skipped else ''))
         self.refresh_all()
 
     def _title_for(self, tab):
@@ -490,24 +494,24 @@ class App:
         if (tab.dir_var.get().strip() or tab.min_var.get().strip()
                 or tab.max_var.get().strip()):
             if not messagebox.askyesno(
-                    '关闭选项卡', f'关闭"{tab.title}"？其设置将丢弃。'):
+                    'Close tab', f'Close "{tab.title}"? Its settings will be discarded.'):
                 return
         self.notebook.forget(tab.frame)
         self._tabs.remove(tab)
         self._loaded.discard(os.path.normcase(os.path.normpath(tab.json_path)))
 
-    # ---- 实时统计 ----
+    # ---- live stats ----
     def glob_range(self):
         try:
             s = self.gmin_var.get().strip()
             lo = float(s) if s else None
         except ValueError:
-            return None, None, '全局最小值不是数字'
+            return None, None, 'global min is not a number'
         try:
             s = self.gmax_var.get().strip()
             hi = float(s) if s else None
         except ValueError:
-            return None, None, '全局最大值不是数字'
+            return None, None, 'global max is not a number'
         return lo, hi, None
 
     def refresh_all(self, *_):
@@ -536,16 +540,16 @@ class App:
         except Exception:
             pass
 
-    # ---- 预检与运行 ----
+    # ---- preflight and run ----
     def start_run(self):
         if self.running:
             return
         out_dir = self.out_var.get().strip()
         if not out_dir:
-            messagebox.showerror('无法开始', '请先设置输出目录。')
+            messagebox.showerror('Cannot start', 'Set the output directory first.')
             return
         if os.path.isfile(out_dir):
-            messagebox.showerror('无法开始', f'输出目录指向的是一个文件：{out_dir}')
+            messagebox.showerror('Cannot start', f'output dir points to a file: {out_dir}')
             return
         plans, probs, zeros = [], [], []
         for t in self._tabs:
@@ -555,34 +559,34 @@ class App:
                 continue
             d = t.dir_var.get().strip()
             if not d or not os.path.isdir(d):
-                probs.append(f'[{t.title}] 未选图片目录或目录不存在')
+                probs.append(f'[{t.title}] image dir missing or not found')
                 continue
             if not t.matched(lo, hi):
                 zeros.append(t.title)
                 continue
             if t._index_dirty:
                 t.build_index_now()
-            t._matched = t.matched(lo, hi)   # 运行快照：之后改表单不影响本次
+            t._matched = t.matched(lo, hi)   # run snapshot: later form edits do not affect this run
             plans.append((t, t.resolved()))
         if probs:
-            messagebox.showerror('预检未通过', '\n'.join(probs))
+            messagebox.showerror('Preflight failed', '\n'.join(probs))
         if not plans:
             return
         if zeros:
-            self._log('[GUI] 匹配 0 条、已跳过：' + '、'.join(zeros) + '\n')
+            self._log('[GUI] 0 matched, skipped: ' + ', '.join(zeros) + '\n')
         names = dedup_folder_names([t.json_path for t, _ in plans])
         renamed = [(t.title, names[t.json_path]) for t, _ in plans
                    if names[t.json_path] != t.title]
         if renamed:
             lines = '\n'.join(f'· {a} → {b}' for a, b in renamed)
             if not messagebox.askyesno(
-                    '输出文件夹重名',
-                    '以下 JSON 同名，输出文件夹自动加父目录前缀：\n\n' + lines
-                    + '\n\n是否继续？'):
+                    'Duplicate output folder names',
+                    'The following JSONs share a name; output folders get parent-dir prefixes:\n\n' + lines
+                    + '\n\nContinue?'):
                 return
         total = sum(len(rows) for _, rows in plans)
         if total == 0:
-            messagebox.showerror('无法开始', '所有选项卡在区间内都没有可定位的图片。')
+            messagebox.showerror('Cannot start', 'No locatable images within range in any tab.')
             return
         self._run(plans, names, out_dir, total)
 
@@ -592,8 +596,8 @@ class App:
         self.t0 = time.time()
         self._lock(True)
         self.progress.config(maximum=total, value=0)
-        self.status_var.set('复制中…')
-        self._log(f'[GUI] 开始复制 {len(plans)} 个选项卡，共 {total} 条 → {out_dir}\n')
+        self.status_var.set('Copying...')
+        self._log(f'[GUI] copying {len(plans)} tabs, {total} entries -> {out_dir}\n')
         self._worker = threading.Thread(
             target=self._copy_worker, args=(plans, names, out_dir, total),
             daemon=True)
@@ -620,23 +624,23 @@ class App:
             try:
                 os.makedirs(folder, exist_ok=True)
             except Exception as e:
-                self.q.put(('log', f'[失败] 建目录 {folder}: {e}\n'))
+                self.q.put(('log', f'[fail] mkdir {folder}: {e}\n'))
                 done += len(rows)
                 continue
             self.q.put(('log', f'--- [{k}/{len(plans)}] {tab.title} → {folder}'
-                        f'（匹配 {len(rows)} 条）\n'))
+                        f' ({len(rows)} matched)\n'))
             copied = missed = renamed_n = failed = 0
             taken = set()
             try:
                 mf = open(os.path.join(folder, 'manifest.csv'), 'w',
                           newline='', encoding='utf-8-sig')
             except Exception as e:
-                self.q.put(('log', f'[失败] 写 manifest.csv: {e}\n'))
+                self.q.put(('log', f'[fail] writing manifest.csv: {e}\n'))
                 done += len(rows)
                 continue
             with mf:
                 w = csv.writer(mf)
-                w.writerow(['新文件名', 'pred', 'JSON记录路径', '实际复制路径'])
+                w.writerow(['new_name', 'pred', 'json_path', 'copied_path'])
                 n_rows = len(rows)
                 for i, (rec_path, pred, src) in enumerate(rows, 1):
                     if self.stop_flag:
@@ -656,23 +660,23 @@ class App:
                             copied += 1
                         except Exception as e:
                             failed += 1
-                            self.q.put(('log', f'[失败] {rec_path}: {e}\n'))
+                            self.q.put(('log', f'[fail] {rec_path}: {e}\n'))
                     if i % 50 == 0 or i == n_rows:
                         self.q.put(('prog', (done, total,
                                              f'{k}/{len(plans)} {tab.title}: {i}/{n_rows}')))
-            msg = f'复制 {copied} · 未找到 {missed} · 撞名加序号 {renamed_n}'
+            msg = f'copied {copied} · not found {missed} · renamed {renamed_n}'
             if failed:
-                msg += f' · 失败 {failed}'
+                msg += f' · failed {failed}'
             if self.stop_flag:
-                msg += '（已停止）'
+                msg += ' (stopped)'
             self.q.put(('tab_done', f'[{tab.title}] {msg}'))
         self.q.put(('done', round(time.time() - t0)))
 
     def stop_run(self):
         self.stop_flag = True
-        self._log('[GUI] 已请求停止：当前文件完成后停下…\n')
+        self._log('[GUI] stop requested: finishes the current file...\n')
 
-    # ---- 运行时轮询（子线程只入队） ----
+    # ---- runtime polling (worker threads only enqueue) ----
     def _poll(self):
         try:
             while True:
@@ -683,7 +687,7 @@ class App:
                     done, total, text = payload
                     self.progress.config(maximum=total, value=done)
                     self.status_var.set(
-                        f'{text} · 已用 {int(time.time() - self.t0)} 秒')
+                        f'{text} · elapsed {int(time.time() - self.t0)} s')
                 elif kind == 'tab_done':
                     self._log('[GUI] ' + payload + '\n')
                 elif kind == 'done':
@@ -693,14 +697,14 @@ class App:
         try:
             self.root.after(120, self._poll)
         except Exception:
-            pass  # 窗口已销毁（测试收尾）
+            pass  # window already destroyed (test teardown)
 
     def _finish_run(self, sec):
         self.running = False
         self._lock(False)
-        tail = '（已停止，部分完成）' if self.stop_flag else ''
-        self._log(f'[GUI] ===== 复制结束，用时 {sec} 秒{tail} =====\n')
-        self.status_var.set(f'复制结束，用时 {sec} 秒{tail}（明细见日志）')
+        tail = ' (stopped, partial)' if self.stop_flag else ''
+        self._log(f'[GUI] ===== copy finished, {sec} s{tail} =====\n')
+        self.status_var.set(f'Copy finished in {sec} s{tail} (details in log)')
         if os.path.isdir(self.out_var.get().strip()):
             self.btn_open.config(state='normal')
         self._save_config()
@@ -711,11 +715,11 @@ class App:
         self.logbox.see('end')
         self.logbox.config(state='disabled')
 
-    # ---- 退出 ----
+    # ---- quit ----
     def on_close(self):
         if self.running:
             if not messagebox.askyesno(
-                    '退出', '复制仍在进行，停止并退出？\n（已复制的文件保留）'):
+                    'Quit', 'Copying still in progress. Stop and quit?\n(Copied files are kept)'):
                 return
             self.stop_flag = True
             self._close_t0 = time.time()

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-"""裁剪策略测试：grid3x3 新旧公式逐像素等价、块数恒定、起点定位、argparse 兼容。
+"""Crop-strategy tests: grid3x3 legacy-vs-new pixel equivalence, constant block counts,
+start-position mapping, argparse compatibility.
 
-纯算法测试：无 GPU、无 GUI、图像全部程序生成。可直接 `python tests/test_crop_modes.py` 运行。
+Pure algorithm tests: no GPU, no GUI, all images generated programmatically.
+Also runs directly: `python tests/test_crop_modes.py`.
 """
 import os
 import sys
@@ -14,13 +16,13 @@ from scripts.predict import CROP, N_CROPS, _crop_padded, get_args, make_crops
 
 
 def _old_grid_starts(length, n=3):
-    """旧版 grid3x3 起点：[0, cx, length-CROP] 逐值 clamp。"""
+    """Legacy grid3x3 starts: [0, cx, length-CROP] clamped value by value."""
     cx = int(round((length - CROP) / 2.0))
     return [min(max(s, 0), max(length - CROP, 0)) for s in [0, cx, length - CROP]]
 
 
 def test_grid3x3_pixel_equivalence():
-    """新泛化 grid 分支与旧版 grid3x3 公式在 7 种尺寸下逐像素等价。"""
+    """The generalized grid branch matches the legacy grid3x3 formula pixel-for-pixel across 7 sizes."""
     for w, h in [(100, 80), (224, 224), (225, 300), (512, 512),
                  (939, 512), (1024, 1024), (4000, 6000)]:
         img = Image.new('RGB', (w, h))
@@ -34,7 +36,7 @@ def test_grid3x3_pixel_equivalence():
 
 
 def test_grid_block_counts():
-    """grid4x4=16 / grid5x5=25 块数恒定（含小图 padding），尺寸均为 224。"""
+    """grid4x4=16 / grid5x5=25 crops always (small images included via padding), all 224x224."""
     for w, h in [(1024, 1024), (100, 80)]:
         img = Image.new('RGB', (w, h))
         for m, k in [('grid4x4', 16), ('grid5x5', 25)]:
@@ -44,9 +46,9 @@ def test_grid_block_counts():
 
 
 def test_grid4x4_start_positions():
-    """1024 宽下 grid4x4 步长 (1024-224)/3 → 标记像素应落在第 6 块（行1列1）。"""
+    """At width 1024 the grid4x4 step is (1024-224)/3 -> the marker pixel must land in crop #6 (row 1, col 1)."""
     img = Image.new('RGB', (1024, 1024), 'white')
-    img.putpixel((267 + 5, 267 + 5), (255, 0, 0))  # 第二行第二列块内部
+    img.putpixel((267 + 5, 267 + 5), (255, 0, 0))  # inside the row-1/col-1 crop
     cs = make_crops(img, 'grid4x4')
     found = [i for i, c in enumerate(cs) if c.getpixel((5, 5)) == (255, 0, 0)]
     assert found == [5], found
@@ -60,11 +62,11 @@ def test_argparse_accepts_grid5x5():
 
 if __name__ == '__main__':
     test_grid3x3_pixel_equivalence()
-    print('1 grid3x3 新旧公式逐像素等价 OK（7 种尺寸）')
+    print('1 grid3x3 legacy/new pixel equivalence OK (7 sizes)')
     test_grid_block_counts()
-    print('2 grid4x4=16 / grid5x5=25 块数恒定 OK（含小图 padding）')
+    print('2 constant block counts OK (incl. small-image padding)')
     test_grid4x4_start_positions()
-    print('3 grid4x4 起点步长/定位 OK')
+    print('3 grid4x4 start step/positioning OK')
     test_argparse_accepts_grid5x5()
-    print('4 argparse 接受 grid5x5 OK')
-    print('\n全部裁剪测试通过')
+    print('4 argparse accepts grid5x5 OK')
+    print('\nAll crop tests passed')

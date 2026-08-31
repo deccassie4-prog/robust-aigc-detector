@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-"""predict.py / predict_gui.py 纯函数单元测试：命令构造（含多目录）、进度解析（含分节）、重名检测。
+"""Unit tests for predict.py / predict_gui.py pure functions: command building (multi-dir),
+progress parsing (with batch sections), duplicate-name detection.
 
-headless：不开 Tk、不开 GPU、无子进程。所有临时文件与样例图片均用 tempfile 现造。
-可直接 `python tests/test_predict_units.py` 运行。
+Headless: no Tk, no GPU, no subprocess. All temp files and sample images are created with
+tempfile at runtime.
+Also runs directly: `python tests/test_predict_units.py`.
 """
 import json
 import os
@@ -11,7 +13,7 @@ import tempfile
 
 try:
     import pytest
-except ImportError:  # 允许无 pytest 直接运行（走文件尾的 __main__ 入口）
+except ImportError:  # pytest optional: direct-run via the __main__ entry at the bottom
     pytest = None
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -21,14 +23,15 @@ from scripts.predict_gui import (build_command, count_images, find_name_conflict
 
 
 def test_parse_line_single_dir():
-    """解析器：真实运行输出逐行喂（单目录）。"""
+    """Parser: real run output fed line by line (single directory)."""
     state = {}
     lines = [
-        "    60 张图 × 5 裁剪块；batch_size=32 块/批 → 6 图/批，共 10 批",
-        "    显存峰值 7.6 GiB（首批）",
-        "    [3/10 批] 18/60 张，用时 12 秒",
-        "[完成] 60 张 -> out.json（失败 1 张记为 pred=-1），用时 18 秒",
-        "    P(fake) 分布: min=0.0681 mean=0.6452 max=0.9385, >0.5 判 fake: 44 张",
+        "    60 images x 5 crops; batch_size=32 blocks/batch -> 6 imgs/batch, 10 batches; "
+        "est. allocated VRAM ~7.6 GiB (+~3GB CUDA context/workspace)",
+        "    VRAM peak 7.6 GiB (first batch)",
+        "    [3/10 batches] 18/60 images, 12 s",
+        "[done] 60 images -> out.json (1 failed as pred=-1), 18 s",
+        "    P(fake) stats: min=0.0681 mean=0.6452 max=0.9385, >0.5 -> fake: 44",
     ]
     for l in lines:
         parse_line(l, state)
@@ -38,21 +41,21 @@ def test_parse_line_single_dir():
 
 
 def test_parse_line_batch_sections():
-    """批处理分节解析：分节重置进度、累积 folders、统计失败文件夹。"""
+    """Batch section parsing: sections reset progress, accumulate folders, count failed folders."""
     state = {}
     lines = [
         "=== [1/3] real ===",
-        "    66 张图 × 1 裁剪块；共 3 批",
-        "    [3/3 批] 66/66 张，用时 30 秒",
-        "[完成] 66 张 -> real.json（失败 0 张记为 pred=-1），用时 30 秒",
-        "    P(fake) 分布: ..., >0.5 判 fake: 2 张",
+        "    66 images x 1 crop; 3 batches",
+        "    [3/3 batches] 66/66 images, 30 s",
+        "[done] 66 images -> real.json (0 failed as pred=-1), 30 s",
+        "    P(fake) stats: ..., >0.5 -> fake: 2",
         "=== [2/3] diffusion ===",
-        "    [1/2 批] 40/46 张，用时 10 秒",
-        "[跳过] 目录里没有图片: bad",
+        "    [1/2 batches] 40/46 images, 10 s",
+        "[skip] no images found in: bad",
         "=== [3/3] real ===",
-        "[完成] 46 张 -> parent__real.json（失败 0 张记为 pred=-1），用时 5 秒",
-        "    P(fake) 分布: ..., >0.5 判 fake: 40 张",
-        "[批处理完成] 成功 2/3 个文件夹，失败: [('bad', '...')]",
+        "[done] 46 images -> parent__real.json (0 failed as pred=-1), 5 s",
+        "    P(fake) stats: ..., >0.5 -> fake: 40",
+        "[batch done] 2/3 folders ok, failed: [('bad', '...')]",
     ]
     for l in lines:
         parse_line(l, state)
@@ -60,11 +63,11 @@ def test_parse_line_batch_sections():
     assert state['folder_fails'] == 1
     assert [f['name'] for f in state['folders']] == ['real', 'real']
     assert state['folders'][0]['fake'] == '2' and state['folders'][1]['fake'] == '40'
-    assert state['total'] == 0 and state['batch'] == 0  # 分节头重置了批进度
+    assert state['total'] == 0 and state['batch'] == 0  # section header reset batch progress
 
 
 def test_build_command_multi_dir():
-    """build_command：多目录展开 + EXTRA 标志；注册表参数 --json_format 只出现一次。"""
+    """build_command: multi-dir expansion + EXTRA flags; the registry flag --json_format appears exactly once."""
     params = [
         {"flag": "--data_dir", "widget": "dir", "default": ""},
         {"flag": "--output_json", "widget": "savefile", "default": ""},
@@ -77,13 +80,13 @@ def test_build_command_multi_dir():
          "--json_format": "detailed", "--batch_size": "32", "--use_amp": True,
          "--output_dir": "X:\\out"}
     cmd = build_command(v, params)
-    assert cmd.count("--data_dir") == 1, "argparse nargs='+' 重复标志会覆盖！"
-    assert cmd.count("--json_format") == 1, "--json_format 重复传参！"
+    assert cmd.count("--data_dir") == 1, "argparse nargs='+' silently overrides repeated flags!"
+    assert cmd.count("--json_format") == 1, "--json_format passed twice!"
     i = cmd.index("--data_dir")
     assert cmd[i + 1:i + 3] == ["X:\\a\\real", "X:\\b\\diffusion"]
     assert cmd[cmd.index("--output_dir") + 1] == "X:\\out"
     assert cmd[cmd.index("--json_format") + 1] == "detailed"
-    assert "--output_json" not in cmd  # 批处理时置空被跳过
+    assert "--output_json" not in cmd  # empty values are skipped in batch mode
     v1 = {"--data_dir": "X:\\one", "--output_json": "x.json", "--batch_size": "32",
           "--use_amp": False}
     cmd1 = build_command(v1, params)
@@ -91,18 +94,18 @@ def test_build_command_multi_dir():
 
 
 def test_name_conflicts_and_out_json_name():
-    """重名检测与改名（路径断言依赖 Windows 分隔符语义）。"""
+    """Duplicate-name detection and renaming (path assertions rely on Windows separator semantics)."""
     conf = find_name_conflicts(["X:\\a\\real", "X:\\b\\real", "X:\\c\\fake"])
     assert set(conf) == {'real'} and len(conf['real']) == 2
     assert out_json_name("X:\\a\\real", {'real'}) == 'a__real'
     assert out_json_name("X:\\a\\real", set()) == 'real'
-    assert out_json_name("X:\\a\\real\\", {'x'}) == 'real'  # 尾部斜杠归一化
+    assert out_json_name("X:\\a\\real\\", {'x'}) == 'real'  # trailing slash normalization
 
 
 def test_out_conflicts():
-    """跨子批次输出文件夹冲突检测：大小写不敏感，返回每组首个路径。"""
+    """Cross-sub-batch output folder conflict detection: case-insensitive, first path per group."""
     if os.name != 'nt':
-        # normcase 大小写归一化是 Windows 特有语义
+        # normcase case-folding is Windows-specific semantics
         if pytest is not None:
             pytest.skip('non-Windows')
         return
@@ -112,7 +115,7 @@ def test_out_conflicts():
 
 
 def test_write_results_schemas():
-    """write_results：detailed schema + competition 兼容（等价门禁同构）。"""
+    """write_results: detailed schema + competition compatibility (same shape as the equivalence gate)."""
     tmp = tempfile.mkdtemp(prefix='_units_')
     try:
         results = [{"image_path": "a.png", "pred": 0.934},
@@ -129,7 +132,7 @@ def test_write_results_schemas():
         assert d['images'][2]['is_fake'] is None and d['images'][2]['pred'] == -1.0
         c = json.load(open(p_comp, encoding='utf-8'))
         assert isinstance(c, list) and c[0] == {"image_path": "a.png", "pred": 0.934}
-        # competition 输出与等价门禁文件同构（顶层列表、字段 image_path/pred）
+        # competition output matches the equivalence-gate file shape (top-level list, image_path/pred fields)
         assert set(c[0]) == {'image_path', 'pred'}
     finally:
         import shutil
@@ -137,7 +140,8 @@ def test_write_results_schemas():
 
 
 def test_count_images():
-    """count_images 回归：递归计数只看扩展名。原回归依赖本机 test_images 的 7 张图，这里现造等价目录。"""
+    """count_images regression: recursive counting by extension only. The original suite relied on a local
+    test_images dir with 7 files; an equivalent directory is created here instead."""
     tmp = tempfile.mkdtemp(prefix='_units_img_')
     try:
         sub = os.path.join(tmp, 'sub')
@@ -160,4 +164,4 @@ if __name__ == '__main__':
     for i, fn in enumerate(fns, 1):
         fn()
         print(f'{i} {fn.__name__} OK')
-    print('\n全部单元测试通过')
+    print('\nAll unit tests passed')

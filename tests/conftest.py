@@ -1,7 +1,8 @@
-"""pytest 根配置：把仓库根注入 sys.path，使 tests/ 能导入 scripts/、src/、evaluation/。
+"""pytest root config: inject the repo root into sys.path so tests/ can import
+scripts/, src/ and evaluation/ packages.
 
-直接以 `python tests/test_xxx.py` 运行时同样生效（各测试文件也保留了双模式入口）。
-"""
+Also takes effect when running `python tests/test_xxx.py` directly (each test file
+keeps a dual-mode __main__ entry)."""
 import os
 import sys
 

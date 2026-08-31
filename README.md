@@ -131,8 +131,8 @@ Training and development data must not include the validation data specified in 
 # Competition format: per-image {"image_path","pred"} JSON
 python scripts/predict.py --data_dir <IMAGE_DIRECTORY> --output_json predictions.json --json_format competition
 
-# Multi-crop + top-k aggregation (catches images the center crop misses)
-python scripts/predict.py --data_dir <IMAGE_DIRECTORY> --crop_mode five --aggregate topk
+# Multi-crop + mean aggregation (catches images the center crop misses)
+python scripts/predict.py --data_dir <IMAGE_DIRECTORY> --crop_mode grid3x3 --aggregate mean --use_amp
 
 # Several folders in one run: the model loads once, each folder gets its own <folder>.json
 python scripts/predict.py --data_dir <DIR_A> <DIR_B> --output_dir results/
@@ -140,6 +140,8 @@ python scripts/predict.py --data_dir <DIR_A> <DIR_B> --output_dir results/
 # Quick debug run on the first N images
 python scripts/predict.py --data_dir <IMAGE_DIRECTORY> --limit 8
 ```
+
+**Our evaluation configuration:** all reported results (clean and under transformations) are produced with the unified setting `--crop_mode grid3x3 --aggregate mean --use_amp` (fp16 mixed precision).
 
 Useful options: `--crop_mode {center,five,grid3x3,grid4x4,grid5x5,multiscale,single336}`, `--aggregate {mean,median,topk,max}`, `--use_amp` (fp16, recommended), `--batch_size` (counts **crops** per forward batch; default 32 ≈ 10 GB VRAM, 64 is the verified ceiling ≈ 15 GB), `--dump_scores` (per-crop score CSV for error analysis).
 

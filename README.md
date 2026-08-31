@@ -123,7 +123,7 @@ python scripts/organize_dataset.py --real_dir <COCO_val2017_DIR> --fake_dir <WIL
 
 Training and development data must not include the validation data specified in the competition rules; this project performs zero-shot inference only.
 
-### 3. Run Inference (competition deliverable)
+### 3. Run Inference (competition deliverable; GUI recommended for batch inference)
 
 ```bash
 # Competition format: per-image {"image_path","pred"} JSON

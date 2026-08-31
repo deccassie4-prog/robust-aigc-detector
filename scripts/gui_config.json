@@ -90,7 +90,7 @@
    "flag": "--json_format",
    "label": "JSON format",
    "widget": "choice",
-   "default": "detailed",
+   "default": "competition",
    "choices": [
     "detailed",
     "competition"

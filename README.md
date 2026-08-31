@@ -125,6 +125,12 @@ python scripts/organize_dataset.py --real_dir <COCO_val2017_DIR> --fake_dir <WIL
 
 Training and development data must not include the validation data specified in the competition rules; this project performs zero-shot inference only.
 
+**Transformed variants (robustness evaluation):** `scripts/batch_transform.py` generates the six transformed counterparts of any image folder — JPEG compression (`_JPEG`), Gaussian blur (`_BLUR`), downscaling (`_RESIZE`), Gaussian noise (`_NOISE`), color jitter (`_COLOR`) and random crop (`_CROP`) — preserving the folder's internal structure. The transformation strengths are constants at the top of the script, defaulted near the stronger levels of the competition's transformation subset:
+
+```bash
+python scripts/batch_transform.py   # a folder picker opens; outputs are created next to the chosen folder
+```
+
 ### 3. Run Inference (competition deliverable; GUI recommended for batch inference)
 
 ```bash
@@ -225,7 +231,7 @@ This project was developed collaboratively by a five-member team.
 
 ### Liu Zhenning — Robustness Evaluation
 
-* Developed image transformation scripts covering JPEG compression, Gaussian blur, resizing, Gaussian noise, colour jitter, and centre cropping.
+* Developed image transformation scripts covering JPEG compression, Gaussian blur, resizing, Gaussian noise, colour jitter, and centre cropping (implemented in `scripts/batch_transform.py`).
 * Generated clean and transformed versions of the validation images.
 * Ran batch inference after the inference environment was established.
 * Produced a comparison of performance on clean versus transformed images.
@@ -282,6 +288,7 @@ robust-aigc-detector/
 │   ├── param_viewer.py     # parameter count / <2B compliance viewer
 │   ├── smoke_test.py       # weights + forward-pass sanity check
 │   ├── organize_dataset.py # build the 0_real/1_fake dataset layout
+│   ├── batch_transform.py  # generate the six transformed variants for robustness tests
 │   └── gui_config.json     # predict_gui parameter registry
 ├── src/mirror/             # MIRROR detector model definition
 ├── tests/                  # headless regression tests (pytest or direct run)

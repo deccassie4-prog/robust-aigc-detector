@@ -77,6 +77,8 @@ data/weights/
 
 All scripts resolve relative weight paths against the repository root, so the layout above works from any working directory. `data/` is git-ignored.
 
+Note that the three files **overlap** and are not additive: the Phase-2 checkpoint already contains the DINOv3 backbone (initialized from `dinov3-huge/`, plus ~2M LoRA adapter parameters) and the memory bank (trained in Phase 1 and also stored separately in `mirror_phase1.pth`). At inference time the Phase-2 checkpoint overwrites all of them, so exactly **one** model instance participates in the forward pass and the deployed parameter count is ≈0.856B once — you can reproduce this with `scripts/param_viewer.py` on any of the files.
+
 ## Output Format (competition deliverable)
 
 `scripts/predict.py` takes one or more image directories and writes a JSON file. The default `--json_format competition` produces the competition-required format — a top-level list with one `image_path` / `pred` entry per image:

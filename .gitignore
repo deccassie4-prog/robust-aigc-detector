@@ -42,6 +42,7 @@ gui_config.json.tmp
 pred_filter_config.json
 pred_filter_config.json.bak
 pred_filter_config.json.tmp
+param_viewer_config.json*
 
 # ===== 环境与密钥 =====
 .env

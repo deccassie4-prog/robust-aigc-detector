@@ -4,22 +4,22 @@ __pycache__/
 *.pyo
 .pytest_cache/
 
-# ===== 虚拟环境 =====
+# ===== Virtual environments =====
 .venv/
 venv/
 env/
 
-# ===== 数据集与本地权重（一律不入库；下载与放置方式见 README）=====
+# ===== Datasets & local weights (never committed; see README for download & layout) =====
 data/
 datasets/
 
-# ===== 模型权重 =====
+# ===== Model weights =====
 *.pth
 *.pt
 *.ckpt
 *.safetensors
 
-# ===== 图片（默认不入库；assets/ 的图表除外）=====
+# ===== Images (never committed; figures under assets/ are the exception) =====
 *.jpg
 *.jpeg
 *.png
@@ -28,7 +28,7 @@ datasets/
 !assets/**/*.jpg
 !assets/**/*.jpeg
 
-# ===== 实验与运行期输出 =====
+# ===== Experiment & runtime outputs =====
 /results/
 results_gui/
 outputs/
@@ -36,7 +36,8 @@ runs/
 logs/
 _smoke_*.png
 
-# ===== GUI 运行期状态（scripts/gui_config.json 本体必须跟踪，只忽略其备份/临时文件）=====
+# ===== GUI runtime state (scripts/gui_config.json itself MUST stay tracked; only its
+# backups/temp files and the other GUIs' configs are ignored) =====
 gui_config.json.bak
 gui_config.json.tmp
 pred_filter_config.json
@@ -44,14 +45,14 @@ pred_filter_config.json.bak
 pred_filter_config.json.tmp
 param_viewer_config.json*
 
-# ===== 环境与密钥 =====
+# ===== Environment & secrets =====
 .env
 .env.*
 
 # ===== Jupyter =====
 .ipynb_checkpoints/
 
-# ===== OS / 工具 =====
+# ===== OS / tooling =====
 .DS_Store
 Thumbs.db
 .zcode/

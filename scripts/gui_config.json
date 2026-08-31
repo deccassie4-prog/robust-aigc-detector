@@ -1,0 +1,177 @@
+{
+ "_comment": "GUI 参数注册表（插件式）：增删参数只改这个文件，predict_gui.py 启动时按它动态生成表单，改完重启 GUI 生效。widget 可选: dir|file|savefile|choice|int|bool|bool_path。values 是用户上次的选择（关闭窗口时自动写回），想恢复出厂值删除 values 即可。权重默认为仓库相对路径 data/weights/（predict.py 会按仓库根解析），把三个权重下载到该目录后即可直接使用。",
+ "params": [
+  {
+   "flag": "--data_dir",
+   "label": "图片目录",
+   "widget": "dir",
+   "default": "",
+   "help": "递归收集全部图片（png/jpg/jpeg/bmp/webp），不看文件夹名打标签"
+  },
+  {
+   "flag": "--crop_mode",
+   "label": "裁剪方式",
+   "widget": "choice",
+   "default": "center",
+   "choices": [
+    "center",
+    "five",
+    "grid3x3",
+    "grid4x4",
+    "grid5x5",
+    "multiscale",
+    "single336"
+   ],
+   "help": "center=中心1块；five=四角+中心5块；gridNxN=每图N²块全覆盖（4x4=16块、5x5=25块，单图更慢但采样更密）；multiscale=0.5/1/2倍各中心；single336=对照组"
+  },
+  {
+   "flag": "--aggregate",
+   "label": "聚合方式",
+   "widget": "choice",
+   "default": "mean",
+   "choices": [
+    "mean",
+    "median",
+    "topk",
+    "max"
+   ],
+   "help": "主推 mean/topk；max 会推高真图误报，仅作对照"
+  },
+  {
+   "flag": "--batch_size",
+   "label": "批大小（块/批）",
+   "widget": "int",
+   "default": 32,
+   "min": 8,
+   "max": 96,
+   "help": "每批前向的裁剪块数；显存≈0.13GB×块数+权重3.4GB（任务管理器口径再加约3GB）"
+  },
+  {
+   "flag": "--no_resize",
+   "label": "不缩放（保留高频）",
+   "widget": "bool",
+   "default": false,
+   "help": "跳过短边>512→512 缩放。注意：高分辨率真图上误报率高（实测 FPR 0.4+），慎用"
+  },
+  {
+   "flag": "--topk_k",
+   "label": "topk 的 k",
+   "widget": "int",
+   "default": 0,
+   "min": 0,
+   "max": 25,
+   "help": "0=自动取每图块数的1/3；仅 aggregate=topk 时生效"
+  },
+  {
+   "flag": "--use_amp",
+   "label": "fp16 混合精度",
+   "widget": "bool",
+   "default": true,
+   "help": "fp16 混合精度，提速明显（溢出问题已修复），推荐开启"
+  },
+  {
+   "flag": "--limit",
+   "label": "只处理前 N 张",
+   "widget": "int",
+   "default": 0,
+   "min": 0,
+   "max": 100000,
+   "help": "0=全部；调试用"
+  },
+  {
+   "flag": "--dump_scores",
+   "label": "导出逐块分数 CSV",
+   "widget": "bool_path",
+   "default": false,
+   "sub_default": "results_gui/per_crop.csv",
+   "help": "误差分析用：每图每裁剪块的单独分数"
+  },
+  {
+   "flag": "--json_format",
+   "label": "JSON 格式",
+   "widget": "choice",
+   "default": "detailed",
+   "choices": [
+    "detailed",
+    "competition"
+   ],
+   "help": "detailed=参数表头+每图 is_fake 布尔（日常/实验用）；competition=每图一条 {image_path,pred}（比赛交付格式，顶层为列表）"
+  },
+  {
+   "flag": "--output_json",
+   "label": "输出 JSON",
+   "widget": "savefile",
+   "default": "",
+   "help": "留空=按时间戳自动命名到 results_gui/，避免覆盖"
+  }
+ ],
+ "advanced": [
+  {
+   "flag": "--model_path",
+   "label": "检测器权重",
+   "widget": "file",
+   "default": "data/weights/checkpoint-h-cur.pth",
+   "help": ""
+  },
+  {
+   "flag": "--memory_path",
+   "label": "记忆库权重",
+   "widget": "file",
+   "default": "data/weights/mirror_phase1.pth",
+   "help": ""
+  },
+  {
+   "flag": "--backbone_path",
+   "label": "DINOv3 骨干目录",
+   "widget": "dir",
+   "default": "data/weights/dinov3-huge",
+   "help": ""
+  },
+  {
+   "flag": "--device",
+   "label": "设备",
+   "widget": "choice",
+   "default": "cuda",
+   "choices": [
+    "cuda",
+    "cpu"
+   ],
+   "help": "cpu 极慢，仅无 GPU 时用"
+  },
+  {
+   "flag": "--num_workers",
+   "label": "DataLoader 进程数",
+   "widget": "int",
+   "default": 0,
+   "min": 0,
+   "max": 8,
+   "help": "保持 0：预处理仅 3ms/张，worker 反而多占内存"
+  }
+ ],
+ "values": {
+  "--crop_mode": "center",
+  "--aggregate": "mean",
+  "--batch_size": "32",
+  "--no_resize": false,
+  "--topk_k": "0",
+  "--use_amp": true,
+  "--limit": "0",
+  "--dump_scores": [
+   false,
+   "results_gui/per_crop.csv"
+  ],
+  "--json_format": "detailed",
+  "--model_path": "data/weights/checkpoint-h-cur.pth",
+  "--memory_path": "data/weights/mirror_phase1.pth",
+  "--backbone_path": "data/weights/dinov3-huge",
+  "--device": "cuda",
+  "--num_workers": "0"
+ },
+ "ui": {},
+ "tabs": [
+  {
+   "dirs": [],
+   "out": ""
+  }
+ ]
+}

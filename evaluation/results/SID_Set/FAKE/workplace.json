@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\0.png",
+  "pred": 0.95421
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\1.png",
+  "pred": 0.953314
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\10.png",
+  "pred": 0.953829
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\11.png",
+  "pred": 0.953444
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\12.png",
+  "pred": 0.95269
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\13.png",
+  "pred": 0.954573
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\14.png",
+  "pred": 0.951213
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\15.png",
+  "pred": 0.954448
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\2.png",
+  "pred": 0.952626
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\3.png",
+  "pred": 0.952929
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\4.png",
+  "pred": 0.952974
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\5.png",
+  "pred": 0.95238
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\6.png",
+  "pred": 0.951552
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\7.png",
+  "pred": 0.95187
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\8.png",
+  "pred": 0.952788
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\workplace\\9.png",
+  "pred": 0.954527
+ }
+]

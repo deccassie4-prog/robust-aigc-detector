@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\0.png",
+  "pred": 0.951175
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\1.png",
+  "pred": 0.950748
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\10.png",
+  "pred": 0.953661
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\11.png",
+  "pred": 0.953405
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\12.png",
+  "pred": 0.952666
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\13.png",
+  "pred": 0.955037
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\14.png",
+  "pred": 0.952675
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\15.png",
+  "pred": 0.95203
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\2.png",
+  "pred": 0.952193
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\3.png",
+  "pred": 0.953159
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\4.png",
+  "pred": 0.95403
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\5.png",
+  "pred": 0.951045
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\6.png",
+  "pred": 0.953965
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\7.png",
+  "pred": 0.953428
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\8.png",
+  "pred": 0.953597
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_CUT\\man_\\9.png",
+  "pred": 0.951387
+ }
+]

@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\0.png",
+  "pred": 0.636936
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\1.png",
+  "pred": 0.84725
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\10.png",
+  "pred": 0.836031
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\11.png",
+  "pred": 0.856197
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\12.png",
+  "pred": 0.673835
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\13.png",
+  "pred": 0.501264
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\14.png",
+  "pred": 0.542899
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\15.png",
+  "pred": 0.583924
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\2.png",
+  "pred": 0.88964
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\3.png",
+  "pred": 0.946374
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\4.png",
+  "pred": 0.878139
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\5.png",
+  "pred": 0.868199
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\6.png",
+  "pred": 0.567574
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\7.png",
+  "pred": 0.840716
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\8.png",
+  "pred": 0.703469
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\woman\\9.png",
+  "pred": 0.858349
+ }
+]

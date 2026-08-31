@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\0.jpg",
+  "pred": 0.917484
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\1.jpg",
+  "pred": 0.935215
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\10.jpg",
+  "pred": 0.949086
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\11.jpg",
+  "pred": 0.941856
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\12.jpg",
+  "pred": 0.920867
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\13.jpg",
+  "pred": 0.950644
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\14.jpg",
+  "pred": 0.951183
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\15.jpg",
+  "pred": 0.949257
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\2.jpg",
+  "pred": 0.948431
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\3.jpg",
+  "pred": 0.942998
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\4.jpg",
+  "pred": 0.933019
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\5.jpg",
+  "pred": 0.940347
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\6.jpg",
+  "pred": 0.950404
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\7.jpg",
+  "pred": 0.664861
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\8.jpg",
+  "pred": 0.938805
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\rose\\9.jpg",
+  "pred": 0.923358
+ }
+]

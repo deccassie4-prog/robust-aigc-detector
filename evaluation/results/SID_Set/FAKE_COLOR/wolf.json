@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\0.png",
+  "pred": 0.952257
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\1.png",
+  "pred": 0.952823
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\10.png",
+  "pred": 0.953238
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\11.png",
+  "pred": 0.952734
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\12.png",
+  "pred": 0.953452
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\13.png",
+  "pred": 0.954168
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\14.png",
+  "pred": 0.952886
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\15.png",
+  "pred": 0.951377
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\2.png",
+  "pred": 0.952012
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\3.png",
+  "pred": 0.952038
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\4.png",
+  "pred": 0.952693
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\5.png",
+  "pred": 0.953572
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\6.png",
+  "pred": 0.95354
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\7.png",
+  "pred": 0.952236
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\8.png",
+  "pred": 0.953913
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\wolf\\9.png",
+  "pred": 0.952177
+ }
+]

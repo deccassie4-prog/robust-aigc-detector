@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\0.png",
+  "pred": 0.954835
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\1.png",
+  "pred": 0.95414
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\10.png",
+  "pred": 0.952723
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\11.png",
+  "pred": 0.954113
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\12.png",
+  "pred": 0.952535
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\13.png",
+  "pred": 0.954585
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\14.png",
+  "pred": 0.950048
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\15.png",
+  "pred": 0.955225
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\2.png",
+  "pred": 0.954834
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\3.png",
+  "pred": 0.951956
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\4.png",
+  "pred": 0.950575
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\5.png",
+  "pred": 0.951287
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\6.png",
+  "pred": 0.952376
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\7.png",
+  "pred": 0.954211
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\8.png",
+  "pred": 0.953994
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\workplace\\9.png",
+  "pred": 0.95405
+ }
+]

@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\0.png",
+  "pred": 0.953577
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\1.png",
+  "pred": 0.952291
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\10.png",
+  "pred": 0.951433
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\11.png",
+  "pred": 0.95171
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\12.png",
+  "pred": 0.950522
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\13.png",
+  "pred": 0.9486
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\14.png",
+  "pred": 0.952456
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\15.png",
+  "pred": 0.950691
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\2.png",
+  "pred": 0.952506
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\3.png",
+  "pred": 0.954064
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\4.png",
+  "pred": 0.952013
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\5.png",
+  "pred": 0.951504
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\6.png",
+  "pred": 0.951438
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\7.png",
+  "pred": 0.951424
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\8.png",
+  "pred": 0.947047
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\woman\\9.png",
+  "pred": 0.95105
+ }
+]

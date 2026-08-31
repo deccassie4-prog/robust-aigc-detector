@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\0.png",
+  "pred": 0.952304
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\1.png",
+  "pred": 0.951828
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\10.png",
+  "pred": 0.95232
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\11.png",
+  "pred": 0.951569
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\12.png",
+  "pred": 0.951398
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\13.png",
+  "pred": 0.951258
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\14.png",
+  "pred": 0.951953
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\15.png",
+  "pred": 0.952761
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\2.png",
+  "pred": 0.951485
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\3.png",
+  "pred": 0.95269
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\4.png",
+  "pred": 0.953093
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\5.png",
+  "pred": 0.95268
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\6.png",
+  "pred": 0.952945
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\7.png",
+  "pred": 0.952357
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\8.png",
+  "pred": 0.951988
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\garden\\9.png",
+  "pred": 0.953431
+ }
+]

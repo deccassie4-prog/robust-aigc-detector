@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\0.png",
+  "pred": 0.884612
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\1.png",
+  "pred": 0.918927
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\10.png",
+  "pred": 0.935684
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\11.png",
+  "pred": 0.939162
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\12.png",
+  "pred": 0.933461
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\13.png",
+  "pred": 0.950824
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\14.png",
+  "pred": 0.953417
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\15.png",
+  "pred": 0.95013
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\2.png",
+  "pred": 0.948766
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\3.png",
+  "pred": 0.904424
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\4.png",
+  "pred": 0.867169
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\5.png",
+  "pred": 0.931815
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\6.png",
+  "pred": 0.95261
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\7.png",
+  "pred": 0.546766
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\8.png",
+  "pred": 0.930755
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\rose\\9.png",
+  "pred": 0.944059
+ }
+]

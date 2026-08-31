@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\0.jpg",
+  "pred": 0.94828
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\1.jpg",
+  "pred": 0.950294
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\10.jpg",
+  "pred": 0.951476
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\11.jpg",
+  "pred": 0.951371
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\12.jpg",
+  "pred": 0.950291
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\13.jpg",
+  "pred": 0.950436
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\14.jpg",
+  "pred": 0.952217
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\15.jpg",
+  "pred": 0.952466
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\2.jpg",
+  "pred": 0.951231
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\3.jpg",
+  "pred": 0.948759
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\4.jpg",
+  "pred": 0.951085
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\5.jpg",
+  "pred": 0.949036
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\6.jpg",
+  "pred": 0.949138
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\7.jpg",
+  "pred": 0.949563
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\8.jpg",
+  "pred": 0.951148
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\garden\\9.jpg",
+  "pred": 0.953667
+ }
+]

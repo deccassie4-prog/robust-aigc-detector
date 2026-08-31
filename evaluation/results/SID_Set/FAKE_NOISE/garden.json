@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\0.png",
+  "pred": 0.950008
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\1.png",
+  "pred": 0.874652
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\10.png",
+  "pred": 0.953676
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\11.png",
+  "pred": 0.952774
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\12.png",
+  "pred": 0.950292
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\13.png",
+  "pred": 0.951854
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\14.png",
+  "pred": 0.934618
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\15.png",
+  "pred": 0.951986
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\2.png",
+  "pred": 0.952624
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\3.png",
+  "pred": 0.905475
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\4.png",
+  "pred": 0.935528
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\5.png",
+  "pred": 0.927607
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\6.png",
+  "pred": 0.911002
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\7.png",
+  "pred": 0.903708
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\8.png",
+  "pred": 0.951323
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\garden\\9.png",
+  "pred": 0.949904
+ }
+]

@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\0.png",
+  "pred": 0.954108
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\1.png",
+  "pred": 0.954334
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\10.png",
+  "pred": 0.951923
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\11.png",
+  "pred": 0.951214
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\12.png",
+  "pred": 0.952443
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\13.png",
+  "pred": 0.950273
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\14.png",
+  "pred": 0.952202
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\15.png",
+  "pred": 0.952716
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\2.png",
+  "pred": 0.949287
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\3.png",
+  "pred": 0.952636
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\4.png",
+  "pred": 0.951727
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\5.png",
+  "pred": 0.952438
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\6.png",
+  "pred": 0.949491
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\7.png",
+  "pred": 0.952718
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\8.png",
+  "pred": 0.952645
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE\\ocean_\\9.png",
+  "pred": 0.951534
+ }
+]

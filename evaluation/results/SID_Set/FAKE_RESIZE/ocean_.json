@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\0.png",
+  "pred": 0.954893
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\1.png",
+  "pred": 0.955386
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\10.png",
+  "pred": 0.953664
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\11.png",
+  "pred": 0.953944
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\12.png",
+  "pred": 0.952529
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\13.png",
+  "pred": 0.952912
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\14.png",
+  "pred": 0.954108
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\15.png",
+  "pred": 0.951904
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\2.png",
+  "pred": 0.936425
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\3.png",
+  "pred": 0.954797
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\4.png",
+  "pred": 0.955759
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\5.png",
+  "pred": 0.955797
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\6.png",
+  "pred": 0.955051
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\7.png",
+  "pred": 0.953284
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\8.png",
+  "pred": 0.955989
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\ocean_\\9.png",
+  "pred": 0.951362
+ }
+]

@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\0.jpg",
+  "pred": 0.872621
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\1.jpg",
+  "pred": 0.952104
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\10.jpg",
+  "pred": 0.953388
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\11.jpg",
+  "pred": 0.953401
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\12.jpg",
+  "pred": 0.850471
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\13.jpg",
+  "pred": 0.737492
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\14.jpg",
+  "pred": 0.923492
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\15.jpg",
+  "pred": 0.876653
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\2.jpg",
+  "pred": 0.860203
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\3.jpg",
+  "pred": 0.946859
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\4.jpg",
+  "pred": 0.896968
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\5.jpg",
+  "pred": 0.786409
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\6.jpg",
+  "pred": 0.772199
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\7.jpg",
+  "pred": 0.77512
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\8.jpg",
+  "pred": 0.94374
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\ocean_\\9.jpg",
+  "pred": 0.950995
+ }
+]

@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\0.png",
+  "pred": 0.951508
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\1.png",
+  "pred": 0.953143
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\10.png",
+  "pred": 0.940267
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\11.png",
+  "pred": 0.954138
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\12.png",
+  "pred": 0.951409
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\13.png",
+  "pred": 0.951788
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\14.png",
+  "pred": 0.950492
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\15.png",
+  "pred": 0.949605
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\2.png",
+  "pred": 0.951831
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\3.png",
+  "pred": 0.952331
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\4.png",
+  "pred": 0.95045
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\5.png",
+  "pred": 0.951792
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\6.png",
+  "pred": 0.953636
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\7.png",
+  "pred": 0.952545
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\8.png",
+  "pred": 0.950239
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\FAKE_COLOR\\cat_\\9.png",
+  "pred": 0.953329
+ }
+]

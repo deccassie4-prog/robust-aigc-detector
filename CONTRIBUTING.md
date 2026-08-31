@@ -89,10 +89,10 @@ Keep files in the appropriate directories.
 robust-aigc-detector/
 ├── analysis/
 ├── assets/
-├── configs/
 ├── evaluation/
 ├── scripts/
 ├── src/
+├── tests/
 ├── .gitignore
 ├── CONTRIBUTING.md
 ├── README.md
@@ -108,7 +108,7 @@ evaluation/ = evaluation code and robustness evaluation results
 
 analysis/ = error analysis, visualisations, and related reports
 
-configs/ = configuration files
+tests/ = headless regression tests (pytest or direct run)
 
 assets/ = project assets, figures, and demonstration materials
 

@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\0.png",
+  "pred": 0.948381
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\1.png",
+  "pred": 0.943539
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\10.png",
+  "pred": 0.95378
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\11.png",
+  "pred": 0.953209
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\12.png",
+  "pred": 0.954056
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\13.png",
+  "pred": 0.955053
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\14.png",
+  "pred": 0.954101
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\15.png",
+  "pred": 0.95279
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\2.png",
+  "pred": 0.952433
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\3.png",
+  "pred": 0.948944
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\4.png",
+  "pred": 0.953356
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\5.png",
+  "pred": 0.918161
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\6.png",
+  "pred": 0.954427
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\7.png",
+  "pred": 0.950235
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\8.png",
+  "pred": 0.953671
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\man_\\9.png",
+  "pred": 0.950249
+ }
+]

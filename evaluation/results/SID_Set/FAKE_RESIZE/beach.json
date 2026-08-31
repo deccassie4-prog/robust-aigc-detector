@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\0.png",
+  "pred": 0.951775
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\1.png",
+  "pred": 0.951959
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\10.png",
+  "pred": 0.9534
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\11.png",
+  "pred": 0.953578
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\12.png",
+  "pred": 0.952188
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\13.png",
+  "pred": 0.952139
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\14.png",
+  "pred": 0.955755
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\15.png",
+  "pred": 0.953476
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\2.png",
+  "pred": 0.951393
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\3.png",
+  "pred": 0.952207
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\4.png",
+  "pred": 0.95363
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\5.png",
+  "pred": 0.953978
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\6.png",
+  "pred": 0.953534
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\7.png",
+  "pred": 0.954997
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\8.png",
+  "pred": 0.950884
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\beach\\9.png",
+  "pred": 0.953616
+ }
+]

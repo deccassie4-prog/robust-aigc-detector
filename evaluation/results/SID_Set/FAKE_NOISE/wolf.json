@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\0.png",
+  "pred": 0.953049
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\1.png",
+  "pred": 0.924625
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\10.png",
+  "pred": 0.866896
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\11.png",
+  "pred": 0.946577
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\12.png",
+  "pred": 0.952707
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\13.png",
+  "pred": 0.842373
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\14.png",
+  "pred": 0.929397
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\15.png",
+  "pred": 0.938797
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\2.png",
+  "pred": 0.952027
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\3.png",
+  "pred": 0.952373
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\4.png",
+  "pred": 0.923443
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\5.png",
+  "pred": 0.936928
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\6.png",
+  "pred": 0.91699
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\7.png",
+  "pred": 0.950905
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\8.png",
+  "pred": 0.943738
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\wolf\\9.png",
+  "pred": 0.862999
+ }
+]

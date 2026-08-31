@@ -1,0 +1,38 @@
+[
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\DALLE\\Advanced\\DALLE3\\dalle3\\20231102153107b5de8e3a8d244d4d\\084a023d8330629b62c189ccd5cdcf49.jpg",
+  "pred": 0.936995
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\DALLE\\Advanced\\DALLE3\\dalle3\\20231102153107b5de8e3a8d244d4d\\181ecd4fa861b2729d64d86bfa77ced9.jpg",
+  "pred": 0.947523
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\DALLE\\Advanced\\DALLE3\\dalle3\\20231102153107b5de8e3a8d244d4d\\260e2627757cdb6f1b1b4665420c3328.jpg",
+  "pred": 0.949711
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\DALLE\\Advanced\\DALLE3\\dalle3\\20231102153107b5de8e3a8d244d4d\\2809bae5893be9f99f3c72701700884e.jpg",
+  "pred": 0.936797
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\DALLE\\Advanced\\DALLE3\\dalle3\\20231102153107b5de8e3a8d244d4d\\3ffebe4a6bf43ee903d4f93cd4708c15.jpg",
+  "pred": 0.947183
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\DALLE\\Advanced\\DALLE3\\dalle3\\20231102153107b5de8e3a8d244d4d\\66d4cae72e99a98276c9723f3bac026c.jpg",
+  "pred": 0.683726
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\DALLE\\Advanced\\DALLE3\\dalle3\\20231102153107b5de8e3a8d244d4d\\7a3c552b6094c68e856458a06c64fb7c.jpg",
+  "pred": 0.734776
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\DALLE\\Advanced\\DALLE3\\dalle3\\20231102153107b5de8e3a8d244d4d\\d836f5e74b261d5175463141070c9d05.jpg",
+  "pred": 0.948068
+ },
+ {
+  "image_path": "F:\\ZCodeProject\\Techjam\\datasets\\DALLE\\Advanced\\DALLE3\\dalle3\\20231102153107b5de8e3a8d244d4d\\f541f997baf32e3f9d4c03752ec9850f.jpg",
+  "pred": 0.932044
+ }
+]

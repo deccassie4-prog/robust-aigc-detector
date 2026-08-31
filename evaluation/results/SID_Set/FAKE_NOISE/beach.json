@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\0.png",
+  "pred": 0.647677
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\1.png",
+  "pred": 0.680623
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\10.png",
+  "pred": 0.944676
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\11.png",
+  "pred": 0.950355
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\12.png",
+  "pred": 0.934713
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\13.png",
+  "pred": 0.931621
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\14.png",
+  "pred": 0.940657
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\15.png",
+  "pred": 0.943569
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\2.png",
+  "pred": 0.913808
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\3.png",
+  "pred": 0.869229
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\4.png",
+  "pred": 0.727824
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\5.png",
+  "pred": 0.936808
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\6.png",
+  "pred": 0.890854
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\7.png",
+  "pred": 0.95113
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\8.png",
+  "pred": 0.91955
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_ZAOSHENG\\beach\\9.png",
+  "pred": 0.953607
+ }
+]

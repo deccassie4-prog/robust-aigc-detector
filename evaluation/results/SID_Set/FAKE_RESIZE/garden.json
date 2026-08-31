@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\0.png",
+  "pred": 0.953259
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\1.png",
+  "pred": 0.952425
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\10.png",
+  "pred": 0.953847
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\11.png",
+  "pred": 0.952978
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\12.png",
+  "pred": 0.951446
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\13.png",
+  "pred": 0.952968
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\14.png",
+  "pred": 0.952105
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\15.png",
+  "pred": 0.952998
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\2.png",
+  "pred": 0.950752
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\3.png",
+  "pred": 0.950058
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\4.png",
+  "pred": 0.953395
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\5.png",
+  "pred": 0.951463
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\6.png",
+  "pred": 0.952125
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\7.png",
+  "pred": 0.953254
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\8.png",
+  "pred": 0.953717
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_SUOFANG\\garden\\9.png",
+  "pred": 0.953992
+ }
+]

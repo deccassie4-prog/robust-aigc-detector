@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\0.jpg",
+  "pred": 0.91863
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\1.jpg",
+  "pred": 0.812622
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\10.jpg",
+  "pred": 0.902007
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\11.jpg",
+  "pred": 0.911584
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\12.jpg",
+  "pred": 0.912476
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\13.jpg",
+  "pred": 0.874145
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\14.jpg",
+  "pred": 0.925904
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\15.jpg",
+  "pred": 0.859333
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\2.jpg",
+  "pred": 0.947427
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\3.jpg",
+  "pred": 0.951937
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\4.jpg",
+  "pred": 0.93508
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\5.jpg",
+  "pred": 0.875521
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\6.jpg",
+  "pred": 0.855779
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\7.jpg",
+  "pred": 0.84776
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\8.jpg",
+  "pred": 0.905113
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_JPEG\\woman\\9.jpg",
+  "pred": 0.853883
+ }
+]

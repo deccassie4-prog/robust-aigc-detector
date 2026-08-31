@@ -1,0 +1,66 @@
+[
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\0.png",
+  "pred": 0.95104
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\1.png",
+  "pred": 0.954044
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\10.png",
+  "pred": 0.950299
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\11.png",
+  "pred": 0.947122
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\12.png",
+  "pred": 0.855535
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\13.png",
+  "pred": 0.938126
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\14.png",
+  "pred": 0.940254
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\15.png",
+  "pred": 0.951409
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\2.png",
+  "pred": 0.95321
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\3.png",
+  "pred": 0.954167
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\4.png",
+  "pred": 0.951842
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\5.png",
+  "pred": 0.951997
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\6.png",
+  "pred": 0.951254
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\7.png",
+  "pred": 0.945494
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\8.png",
+  "pred": 0.93679
+ },
+ {
+  "image_path": "D:\\Techjam_datasets\\FAKE_GAOSI\\woman\\9.png",
+  "pred": 0.950684
+ }
+]
